@@ -1,0 +1,40 @@
+MPLINK 5.08, LINKER
+Linker Map File - Created Tue Sep 13 15:37:31 2016
+
+                                 Section Info
+                  Section       Type    Address   Location Size(Bytes)
+                ---------  ---------  ---------  ---------  ---------
+                   .org_0       code   0x000000    program   0x000024
+                   .cinit    romdata   0x000012    program   0x000004
+.config_2007_BUILD/DEFAULT/PRODUCTION/ASM.O       code   0x002007    program   0x000002
+
+
+
+                              Program Memory Usage 
+                               Start         End      
+                           ---------   ---------      
+                            0x000000    0x000013      
+                            0x002007    0x002007      
+            21 out of 8454 program addresses used, program memory utilization is 0%
+
+
+
+                              Symbols - Sorted by Name
+                     Name    Address   Location    Storage File                     
+                ---------  ---------  ---------  --------- ---------                
+                  DelayUS   0x00000c    program     static F:\electricity\MCU\PIC\CourseLab\NO1_DelayUS\lab1.X\ASM.asm
+                    LL1US   0x00000d    program     static F:\electricity\MCU\PIC\CourseLab\NO1_DelayUS\lab1.X\ASM.asm
+                     Loop   0x000005    program     static F:\electricity\MCU\PIC\CourseLab\NO1_DelayUS\lab1.X\ASM.asm
+                     main   0x000000    program     static F:\electricity\MCU\PIC\CourseLab\NO1_DelayUS\lab1.X\ASM.asm
+
+
+
+                              Symbols - Sorted by Address
+                     Name    Address   Location    Storage File                     
+                ---------  ---------  ---------  --------- ---------                
+                     main   0x000000    program     static F:\electricity\MCU\PIC\CourseLab\NO1_DelayUS\lab1.X\ASM.asm
+                     Loop   0x000005    program     static F:\electricity\MCU\PIC\CourseLab\NO1_DelayUS\lab1.X\ASM.asm
+                  DelayUS   0x00000c    program     static F:\electricity\MCU\PIC\CourseLab\NO1_DelayUS\lab1.X\ASM.asm
+                    LL1US   0x00000d    program     static F:\electricity\MCU\PIC\CourseLab\NO1_DelayUS\lab1.X\ASM.asm
+
+
