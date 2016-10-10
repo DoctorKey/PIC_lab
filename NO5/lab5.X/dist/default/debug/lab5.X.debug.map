@@ -1,0 +1,42 @@
+MPLINK 5.08, LINKER
+Linker Map File - Created Sun Oct 09 14:49:52 2016
+
+                                 Section Info
+                  Section       Type    Address   Location Size(Bytes)
+                ---------  ---------  ---------  ---------  ---------
+                   .org_0       code   0x000000    program   0x000032
+                   .cinit    romdata   0x000019    program   0x000004
+.config_2007_BUILD/DEFAULT/DEBUG/MAIN.O       code   0x002007    program   0x000002
+
+
+
+                              Program Memory Usage 
+                               Start         End      
+                           ---------   ---------      
+                            0x000000    0x00001a      
+                            0x002007    0x002007      
+            28 out of 8454 program addresses used, program memory utilization is 0%
+
+
+
+                              Symbols - Sorted by Name
+                     Name    Address   Location    Storage File                     
+                ---------  ---------  ---------  --------- ---------                
+                  Bin2BCD   0x00000d    program     static F:\electricity\MCU\PIC\PIC_lab\NO5\lab5.X\main.asm
+                     Main   0x000002    program     static F:\electricity\MCU\PIC\PIC_lab\NO5\lab5.X\main.asm
+             _.org_0_000C   0x00000c    program     static F:\electricity\MCU\PIC\PIC_lab\NO5\lab5.X\main.asm
+             _.org_0_0012   0x000012    program     static F:\electricity\MCU\PIC\PIC_lab\NO5\lab5.X\main.asm
+             _.org_0_0014   0x000014    program     static F:\electricity\MCU\PIC\PIC_lab\NO5\lab5.X\main.asm
+
+
+
+                              Symbols - Sorted by Address
+                     Name    Address   Location    Storage File                     
+                ---------  ---------  ---------  --------- ---------                
+                     Main   0x000002    program     static F:\electricity\MCU\PIC\PIC_lab\NO5\lab5.X\main.asm
+             _.org_0_000C   0x00000c    program     static F:\electricity\MCU\PIC\PIC_lab\NO5\lab5.X\main.asm
+                  Bin2BCD   0x00000d    program     static F:\electricity\MCU\PIC\PIC_lab\NO5\lab5.X\main.asm
+             _.org_0_0012   0x000012    program     static F:\electricity\MCU\PIC\PIC_lab\NO5\lab5.X\main.asm
+             _.org_0_0014   0x000014    program     static F:\electricity\MCU\PIC\PIC_lab\NO5\lab5.X\main.asm
+
+

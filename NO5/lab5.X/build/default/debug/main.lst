@@ -1,0 +1,625 @@
+MPASM 5.68                          MAIN.ASM   10-9-2016  14:49:50         PAGE  1
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+                      00001 
+                      00002 
+                      00003         list            p=16f877A       ; list directive to define processor
+                      00004         #include        <p16f877A.inc>  ; processor specific variable definitions       
+                      00001         LIST
+                      00002 
+                      00003 ;==========================================================================
+                      00004 ; Build date : May 15 2016
+                      00005 ;  MPASM PIC16F877A processor include
+                      00006 ; 
+                      00007 ;  (c) Copyright 1999-2016 Microchip Technology, All rights reserved
+                      00008 ;==========================================================================
+                      00009 
+                      00567         LIST
+2007   3F3A           00005         __CONFIG _CP_OFF & _WDT_OFF & _BODEN_OFF & _PWRTE_OFF & _HS_OSC & _WRT_OFF & _LVP_OFF & _CPD_OFF
+                      00006 ;1.     编写子程序Bin2BCD，实现二进制数到压缩BCD码的转换。
+                      00007 ;       待转换的二进制数存放在w寄存器内，子程序调用完成后得到的BCD码仍存放在w寄存器内返回。例如
+                      00008 ;movlw .45; w=45
+                      00009 ;call   Bin2BCD;
+                      00010 ;nop      ;w=0x45
+                      00011 ;编写Main主程序，对编写的子程序进行测试。
+                      00012 ;2.     编写子程序Div_16，实现双字节无符号数除法。自行定义变量，其中：
+                      00013 ;ACCALO ;存放被除数低 8 位
+                      00014 ;ACCAHI ;存放被除数高 8 位
+                      00015 ;ACCBLO ;存放除数 8 位
+                      00016 ;ACCCLO ;存放余数 8 位
+                      00017 ;ACCCHI ;存放商 8 位
+                      00018 
+Warning[207]: Found label after column 1. (MA)
+  00000020            00019  MA              EQU    0x20  ;存放乘数
+Warning[207]: Found label after column 1. (MB)
+  00000021            00020  MB              EQU    0x21  ;存放被乘数和乘积 第 8～15 位
+Warning[207]: Found label after column 1. (MC)
+  00000022            00021  MC              EQU    0x22  ;存放乘积第 0～7 位
+Warning[207]: Found label after column 1. (TEN)
+  00000023            00022  TEN              EQU    0x23  ;临时寄存器
+Warning[207]: Found label after column 1. (TEMP)
+  00000024            00023  TEMP         EQU    0x24  ;临时寄存器
+                      00024 
+  00000025            00025 ACCALO  equ     0x25    ;存放乘数低 8 位
+Warning[207]: Found label after column 1. (ACCAHI)
+  00000026            00026  ACCAHI equ     0x26    ;存放乘数高 8 位
+Warning[207]: Found label after column 1. (ACCBLO)
+  00000027            00027  ACCBLO equ     0x27    ;存放被乘数低 8 位和乘积第 16～23 位
+Warning[207]: Found label after column 1. (ACCBHI)
+  00000028            00028  ACCBHI equ     0x28     ;存放被乘数高 8 位和乘积第 24～31 位
+Warning[207]: Found label after column 1. (ACCCLO)
+  00000029            00029  ACCCLO equ     0x29    ;存放乘积第 0～7 位
+Warning[207]: Found label after column 1. (ACCCHI)
+  0000002A            00030  ACCCHI equ     0x2a    ;存放乘积第 8～15 位
+  0000002B            00031 BTH     equ     0x2b    ;临时寄存器
+  0000002C            00032 BTL     equ     0x2c    ;临时寄存器
+                      00033         
+MPASM 5.68                          MAIN.ASM   10-9-2016  14:49:50         PAGE  2
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+                      00034 #define A_16    0x4015
+                      00035 #define B_16    0x3321
+                      00036 ;***************************8 ×8 位无符号乘法 宏指令***********************    
+                      00037 mpy     macro
+                      00038         MOVLW   0xFE               ; 被乘数0xFE 送 MB
+                      00039         MOVWF   MA      
+                      00040         MOVLW   0xAB               ; 乘数 0xAB送 MA
+                      00041         MOVWF   MB      
+                      00042         CALL    SETUP                    ;调用子程序，将MB 的值送 MD
+                      00043  
+                      00044         BCF          STATUS, C          ; 清进位位
+                      00045         RRF         MD                        ; MD 右移
+                      00046         BTFSC    STATUS, C           ;判断是否需要相加
+                      00047         CALL       Add_8                   ; 加乘数至 MB
+                      00048         RRF         MB                         ; 右移部分乘积
+                      00049         RRF         MC  
+                      00050         DECFSZ  TEMP                   ; 乘法完成否？
+                      00051         GOTO      $ - 7                ; 否，继续求乘积
+                      00052         endm
+                      00053 ;**********************************************************************
+                      00054         ORG         0x0000           ; 复位入口地址
+0000   0000           00055         nop                                      ; 兼容ICD调试工具，必须加nop
+0001   2???           00056         goto        Main                 ; 跳转至Main函数
+                      00057 ;**************************************Main 函数的代码**************
+0002                  00058 Main                                               
+0002   302D           00059         movlw   .45
+0003   2???           00060         call    Bin2BCD
+0004   3014           00061         movlw   .20
+0005   2???           00062         call    Bin2BCD
+0006   3037           00063         movlw   .55
+0007   2???           00064         call    Bin2BCD
+0008   3005           00065         movlw   .5
+0009   2???           00066         call    Bin2BCD
+000A   0000           00067         nop
+000B   0000           00068         nop
+000C   2???           00069         goto           $                        ; 死循环
+                      00070         
+                      00071 ;**********************二进制转BCD***************************************           
+000D                  00072 Bin2BCD
+000D   00A4           00073             movwf       TEMP    ;将w寄存器保存
+000E   01A3           00074             clrf        TEN
+000F   300A           00075             movlw       .10
+0010   02A4           00076             subwf       TEMP,f
+0011   1C03           00077             btfss       STATUS,C
+0012   2???           00078             goto        $ + 3   ;f<w
+0013   0AA3           00079             incf        TEN,f   ;f>w
+0014   2???           00080             goto        $ - 4
+0015   0724           00081             addwf       TEMP,w
+0016   0EA3           00082             swapf       TEN,f   ;将十位置于高四位
+0017   0423           00083             iorwf       TEN,w   ;w高四位十位，低四位个位
+0018   0008           00084             return
+                      00085 ;;*********************************8 ×8 位无符号乘法子程序 ********************
+                      00086 ;        ORG  0X0100
+MPASM 5.68                          MAIN.ASM   10-9-2016  14:49:50         PAGE  3
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+                      00087 ;Mpy_8                 
+                      00088 ;            CALL    SETUP                    ;调用子程序，将MB 的值送 MD
+                      00089 ;MLOOP  
+                      00090 ;       BCF          STATUS, C          ; 清进位位
+                      00091 ;       RRF         MD                        ; MD 右移
+                      00092 ;       BTFSC    STATUS, C           ;判断是否需要相加
+                      00093 ;       CALL       Add_8                   ; 加乘数至 MB
+                      00094 ;       RRF         MB                         ; 右移部分乘积
+                      00095 ;       RRF         MC  
+                      00096 ;       DECFSZ  TEMP                   ; 乘法完成否？
+                      00097 ;       GOTO      MLOOP                ; 否，继续求乘积
+                      00098 ;       RETURN                               ; 子程序返回
+                      00099 ;; * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+                      00100 ;SETUP  
+                      00101 ;       MOVLW    .8                        ;初始化 TEMP 寄存器 
+                      00102 ;       MOVWF    TEMP
+                      00103 ;       MOVF         MB, W              ; 乘数送MD
+                      00104 ;       MOVWF    MD             
+                      00105 ;       CLRF          MB                     ; 清 MB
+                      00106 ;        CLRF          MC                     ;清 MC
+                      00107 ;       RETURN                              ;子程序返回
+                      00108 ;Add_8         
+                      00109 ;       MOVF        MA, w                ;MA和MB相加 
+                      00110 ;       ADDWF    MB ,F  
+                      00111 ;       RETURN                               ;子程序返回  
+                      00112 ;
+                      00113 ;;*****************************16*16位无符号乘法************************
+                      00114 ;;      ACCAHI ACCALO * ACCBHI ACCBLO = ACCBHI ACCBLO ACCCHI ACCCLO
+                      00115 ;Mpy_16
+                      00116 ;       movlw   .16
+                      00117 ;       movwf   TEMP    ;移位16次
+                      00118 ;       
+                      00119 ;       movlw   high(A_16)
+                      00120 ;       movwf   ACCAHI
+                      00121 ;       movlw   low(A_16)
+                      00122 ;       movwf   ACCALO
+                      00123 ;       movlw   high(B_16)
+                      00124 ;       movwf   ACCBHI
+                      00125 ;       movwf   BTH     ;临时寄存器保存B高8位
+                      00126 ;       movlw   low(B_16)
+                      00127 ;       movwf   ACCBLO
+                      00128 ;       movwf   BTL     ;临时寄存器保存B低8位
+                      00129 ;       
+                      00130 ;       clrf    ACCBHI
+                      00131 ;       clrf    ACCBLO
+                      00132 ;       clrf    ACCCHI
+                      00133 ;       clrf    ACCCLO  ;清零
+                      00134 ;M16LOOP
+                      00135 ;       bcf     STATUS, C        ; 清进位
+                      00136 ;       rrf     BTH     ; B高8位右移
+                      00137 ;       rrf     BTL     ;B低8位右移
+                      00138 ;       btfsc   STATUS, C   ;判断是否需要相加
+                      00139 ;       call    ADD_16      ; 加乘数至 ACCB
+MPASM 5.68                          MAIN.ASM   10-9-2016  14:49:50         PAGE  4
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+                      00140 ;       rrf     ACCBHI  ; 右移部分乘积
+                      00141 ;       rrf     ACCBLO
+                      00142 ;       rrf     ACCCHI
+                      00143 ;       rrf     ACCCLO
+                      00144 ;       decfsz  TEMP    ; 乘法完成否？
+                      00145 ;       goto    M16LOOP ; 否，继续求乘积
+                      00146 ;       return          ; 子程序返回
+                      00147 ;       
+                      00148 ;ADD_16 ;ACCAHI ACCALO + ACCBHI ACCBLO = ACCBHI ACCBLO
+                      00149 ;       movf    ACCALO,w        
+                      00150 ;       addwf   ACCBLO,f        ;低8位相加，结果存入ACCBLO
+                      00151 ;       btfsc   STATUS,C        
+                      00152 ;       incf    ACCAHI,f        ;C=1;有进位，高8位加1
+                      00153 ;       movf    ACCAHI,w
+                      00154 ;       addwf   ACCBHI,f        ;高8位相加，存入ACCBHI
+                      00155 ;       return
+                      00156 
+Warning[205]: Found directive in column 1. (END)
+3F3A                  00157 END                                                     ; 程序结束
+MPASM 5.68                          MAIN.ASM   10-9-2016  14:49:50         PAGE  5
+
+
+SYMBOL TABLE
+  LABEL                             VALUE 
+
+ACCAHI                            00000026
+ACCALO                            00000025
+ACCBHI                            00000028
+ACCBLO                            00000027
+ACCCHI                            0000002A
+ACCCLO                            00000029
+ACKDT                             00000005
+ACKEN                             00000004
+ACKSTAT                           00000006
+ADCON0                            0000001F
+ADCON1                            0000009F
+ADCS0                             00000006
+ADCS1                             00000007
+ADCS2                             00000006
+ADDEN                             00000003
+ADFM                              00000007
+ADIE                              00000006
+ADIF                              00000006
+ADON                              00000000
+ADRESH                            0000001E
+ADRESL                            0000009E
+A_16                              0x4015
+BCLIE                             00000003
+BCLIF                             00000003
+BF                                00000000
+BRGH                              00000002
+BTH                               0000002B
+BTL                               0000002C
+B_16                              0x3321
+Bin2BCD                           0000000D
+C                                 00000000
+C1INV                             00000004
+C1OUT                             00000006
+C2INV                             00000005
+C2OUT                             00000007
+CCP1CON                           00000017
+CCP1IE                            00000002
+CCP1IF                            00000002
+CCP1M0                            00000000
+CCP1M1                            00000001
+CCP1M2                            00000002
+CCP1M3                            00000003
+CCP1X                             00000005
+CCP1Y                             00000004
+CCP2CON                           0000001D
+CCP2IE                            00000000
+CCP2IF                            00000000
+CCP2M0                            00000000
+CCP2M1                            00000001
+CCP2M2                            00000002
+CCP2M3                            00000003
+CCP2X                             00000005
+CCP2Y                             00000004
+MPASM 5.68                          MAIN.ASM   10-9-2016  14:49:50         PAGE  6
+
+
+SYMBOL TABLE
+  LABEL                             VALUE 
+
+CCPR1                             00000015
+CCPR1H                            00000016
+CCPR1L                            00000015
+CCPR2                             0000001B
+CCPR2H                            0000001C
+CCPR2L                            0000001B
+CHS0                              00000003
+CHS1                              00000004
+CHS2                              00000005
+CIS                               00000003
+CKE                               00000006
+CKP                               00000004
+CM0                               00000000
+CM1                               00000001
+CM2                               00000002
+CMCON                             0000009C
+CMIE                              00000006
+CMIF                              00000006
+CREN                              00000004
+CSRC                              00000007
+CVR0                              00000000
+CVR1                              00000001
+CVR2                              00000002
+CVR3                              00000003
+CVRCON                            0000009D
+CVREN                             00000007
+CVROE                             00000006
+CVRR                              00000005
+D                                 00000005
+DATA_ADDRESS                      00000005
+DC                                00000001
+D_A                               00000005
+D_NOT_A                           00000005
+EEADR                             0000010D
+EEADRH                            0000010F
+EECON1                            0000018C
+EECON2                            0000018D
+EEDATA                            0000010C
+EEDATH                            0000010E
+EEIE                              00000004
+EEIF                              00000004
+EEPGD                             00000007
+F                                 00000001
+FERR                              00000002
+FSR                               00000004
+GCEN                              00000007
+GIE                               00000007
+GO                                00000002
+GO_DONE                           00000002
+GO_NOT_DONE                       00000002
+I2C_DATA                          00000005
+I2C_READ                          00000002
+I2C_START                         00000003
+MPASM 5.68                          MAIN.ASM   10-9-2016  14:49:50         PAGE  7
+
+
+SYMBOL TABLE
+  LABEL                             VALUE 
+
+I2C_STOP                          00000004
+IBF                               00000007
+IBOV                              00000005
+INDF                              00000000
+INTCON                            0000000B
+INTE                              00000004
+INTEDG                            00000006
+INTF                              00000001
+IRP                               00000007
+MA                                00000020
+MB                                00000021
+MC                                00000022
+Main                              00000002
+NOT_A                             00000005
+NOT_ADDRESS                       00000005
+NOT_BO                            00000000
+NOT_BOR                           00000000
+NOT_DONE                          00000002
+NOT_PD                            00000003
+NOT_POR                           00000001
+NOT_RBPU                          00000007
+NOT_RC8                           00000006
+NOT_T1SYNC                        00000002
+NOT_TO                            00000004
+NOT_TX8                           00000006
+NOT_W                             00000002
+NOT_WRITE                         00000002
+OBF                               00000006
+OERR                              00000001
+OPTION_REG                        00000081
+P                                 00000004
+PCFG0                             00000000
+PCFG1                             00000001
+PCFG2                             00000002
+PCFG3                             00000003
+PCL                               00000002
+PCLATH                            0000000A
+PCON                              0000008E
+PEIE                              00000006
+PEN                               00000002
+PIE1                              0000008C
+PIE2                              0000008D
+PIR1                              0000000C
+PIR2                              0000000D
+PORTA                             00000005
+PORTB                             00000006
+PORTC                             00000007
+PORTD                             00000008
+PORTE                             00000009
+PR2                               00000092
+PS0                               00000000
+PS1                               00000001
+PS2                               00000002
+MPASM 5.68                          MAIN.ASM   10-9-2016  14:49:50         PAGE  8
+
+
+SYMBOL TABLE
+  LABEL                             VALUE 
+
+PSA                               00000003
+PSPIE                             00000007
+PSPIF                             00000007
+PSPMODE                           00000004
+R                                 00000002
+RA0                               00000000
+RA1                               00000001
+RA2                               00000002
+RA3                               00000003
+RA4                               00000004
+RA5                               00000005
+RB0                               00000000
+RB1                               00000001
+RB2                               00000002
+RB3                               00000003
+RB4                               00000004
+RB5                               00000005
+RB6                               00000006
+RB7                               00000007
+RBIE                              00000003
+RBIF                              00000000
+RC0                               00000000
+RC1                               00000001
+RC2                               00000002
+RC3                               00000003
+RC4                               00000004
+RC5                               00000005
+RC6                               00000006
+RC7                               00000007
+RC8_9                             00000006
+RC9                               00000006
+RCD8                              00000000
+RCEN                              00000003
+RCIE                              00000005
+RCIF                              00000005
+RCREG                             0000001A
+RCSTA                             00000018
+RD                                00000000
+RD0                               00000000
+RD1                               00000001
+RD2                               00000002
+RD3                               00000003
+RD4                               00000004
+RD5                               00000005
+RD6                               00000006
+RD7                               00000007
+RE0                               00000000
+RE1                               00000001
+RE2                               00000002
+READ_WRITE                        00000002
+RP0                               00000005
+RP1                               00000006
+RSEN                              00000001
+MPASM 5.68                          MAIN.ASM   10-9-2016  14:49:50         PAGE  9
+
+
+SYMBOL TABLE
+  LABEL                             VALUE 
+
+RX9                               00000006
+RX9D                              00000000
+R_NOT_W                           00000002
+R_W                               00000002
+S                                 00000003
+SEN                               00000000
+SMP                               00000007
+SPBRG                             00000099
+SPEN                              00000007
+SREN                              00000005
+SSPADD                            00000093
+SSPBUF                            00000013
+SSPCON                            00000014
+SSPCON2                           00000091
+SSPEN                             00000005
+SSPIE                             00000003
+SSPIF                             00000003
+SSPM0                             00000000
+SSPM1                             00000001
+SSPM2                             00000002
+SSPM3                             00000003
+SSPOV                             00000006
+SSPSTAT                           00000094
+STATUS                            00000003
+SYNC                              00000004
+T0CS                              00000005
+T0IE                              00000005
+T0IF                              00000002
+T0SE                              00000004
+T1CKPS0                           00000004
+T1CKPS1                           00000005
+T1CON                             00000010
+T1INSYNC                          00000002
+T1OSCEN                           00000003
+T1SYNC                            00000002
+T2CKPS0                           00000000
+T2CKPS1                           00000001
+T2CON                             00000012
+TEMP                              00000024
+TEN                               00000023
+TMR0                              00000001
+TMR0IE                            00000005
+TMR0IF                            00000002
+TMR1                              0000000E
+TMR1CS                            00000001
+TMR1H                             0000000F
+TMR1IE                            00000000
+TMR1IF                            00000000
+TMR1L                             0000000E
+TMR1ON                            00000000
+TMR2                              00000011
+TMR2IE                            00000001
+TMR2IF                            00000001
+MPASM 5.68                          MAIN.ASM   10-9-2016  14:49:50         PAGE 10
+
+
+SYMBOL TABLE
+  LABEL                             VALUE 
+
+TMR2ON                            00000002
+TOUTPS0                           00000003
+TOUTPS1                           00000004
+TOUTPS2                           00000005
+TOUTPS3                           00000006
+TRISA                             00000085
+TRISA0                            00000000
+TRISA1                            00000001
+TRISA2                            00000002
+TRISA3                            00000003
+TRISA4                            00000004
+TRISA5                            00000005
+TRISB                             00000086
+TRISB0                            00000000
+TRISB1                            00000001
+TRISB2                            00000002
+TRISB3                            00000003
+TRISB4                            00000004
+TRISB5                            00000005
+TRISB6                            00000006
+TRISB7                            00000007
+TRISC                             00000087
+TRISC0                            00000000
+TRISC1                            00000001
+TRISC2                            00000002
+TRISC3                            00000003
+TRISC4                            00000004
+TRISC5                            00000005
+TRISC6                            00000006
+TRISC7                            00000007
+TRISD                             00000088
+TRISD0                            00000000
+TRISD1                            00000001
+TRISD2                            00000002
+TRISD3                            00000003
+TRISD4                            00000004
+TRISD5                            00000005
+TRISD6                            00000006
+TRISD7                            00000007
+TRISE                             00000089
+TRISE0                            00000000
+TRISE1                            00000001
+TRISE2                            00000002
+TRMT                              00000001
+TX8_9                             00000006
+TX9                               00000006
+TX9D                              00000000
+TXD8                              00000000
+TXEN                              00000005
+TXIE                              00000004
+TXIF                              00000004
+TXREG                             00000019
+TXSTA                             00000098
+MPASM 5.68                          MAIN.ASM   10-9-2016  14:49:50         PAGE 11
+
+
+SYMBOL TABLE
+  LABEL                             VALUE 
+
+UA                                00000001
+W                                 00000000
+WCOL                              00000007
+WR                                00000001
+WREN                              00000002
+WRERR                             00000003
+Z                                 00000002
+_.org_0_000C                      0000000C
+_.org_0_0012                      00000012
+_.org_0_0014                      00000014
+_BODEN_OFF                        00003FBF
+_BODEN_ON                         00003FFF
+_BOREN_OFF                        00003FBF
+_BOREN_ON                         00003FFF
+_CONFIG                           00002007
+_CPD_OFF                          00003FFF
+_CPD_ON                           00003EFF
+_CP_ALL                           00001FFF
+_CP_OFF                           00003FFF
+_CP_ON                            00001FFF
+_DEBUG_OFF                        00003FFF
+_DEBUG_ON                         000037FF
+_DEVID1                           00002006
+_FOSC_EXTRC                       00003FFF
+_FOSC_HS                          00003FFE
+_FOSC_LP                          00003FFC
+_FOSC_XT                          00003FFD
+_HS_OSC                           00003FFE
+_IDLOC0                           00002000
+_IDLOC1                           00002001
+_IDLOC2                           00002002
+_IDLOC3                           00002003
+_LP_OSC                           00003FFC
+_LVP_OFF                          00003F7F
+_LVP_ON                           00003FFF
+_PWRTE_OFF                        00003FFF
+_PWRTE_ON                         00003FF7
+_RC_OSC                           00003FFF
+_WDTE_OFF                         00003FFB
+_WDTE_ON                          00003FFF
+_WDT_OFF                          00003FFB
+_WDT_ON                           00003FFF
+_WRT_1FOURTH                      00003BFF
+_WRT_256                          00003DFF
+_WRT_HALF                         000039FF
+_WRT_OFF                          00003FFF
+_XT_OSC                           00003FFD
+__16F877A                         00000001
+__DEBUG                           
+__MPLAB_DEBUGGER_SIMULATOR        1
+mpy                               
+
+MPASM 5.68                          MAIN.ASM   10-9-2016  14:49:50         PAGE 12
+
+
+
+
+
+Errors   :     0
+Warnings :    11 reported,     0 suppressed
+Messages :     0 reported,     0 suppressed
+
+

@@ -1,0 +1,54 @@
+MPLINK 5.08, LINKER
+Linker Map File - Created Sat Oct 08 21:05:28 2016
+
+                                 Section Info
+                  Section       Type    Address   Location Size(Bytes)
+                ---------  ---------  ---------  ---------  ---------
+                   .org_0       code   0x000000    program   0x000034
+                   .cinit    romdata   0x00001a    program   0x000004
+                   .org_1       code   0x000100    program   0x00006e
+.config_2007_BUILD/DEFAULT/PRODUCTION/ASM.O       code   0x002007    program   0x000002
+
+
+
+                              Program Memory Usage 
+                               Start         End      
+                           ---------   ---------      
+                            0x000000    0x00001b      
+                            0x000100    0x000136      
+                            0x002007    0x002007      
+            84 out of 8454 program addresses used, program memory utilization is 0%
+
+
+
+                              Symbols - Sorted by Name
+                     Name    Address   Location    Storage File                     
+                ---------  ---------  ---------  --------- ---------                
+                   ADD_16   0x000130    program     static F:\electricity\MCU\PIC\PIC_lab\NO4\lab4.X\ASM.asm
+                    Add_8   0x000111    program     static F:\electricity\MCU\PIC\PIC_lab\NO4\lab4.X\ASM.asm
+                  M16LOOP   0x000124    program     static F:\electricity\MCU\PIC\PIC_lab\NO4\lab4.X\ASM.asm
+                    MLOOP   0x000101    program     static F:\electricity\MCU\PIC\PIC_lab\NO4\lab4.X\ASM.asm
+                     Main   0x000002    program     static F:\electricity\MCU\PIC\PIC_lab\NO4\lab4.X\ASM.asm
+                   Mpy_16   0x000114    program     static F:\electricity\MCU\PIC\PIC_lab\NO4\lab4.X\ASM.asm
+                    Mpy_8   0x000100    program     static F:\electricity\MCU\PIC\PIC_lab\NO4\lab4.X\ASM.asm
+                    SETUP   0x00010a    program     static F:\electricity\MCU\PIC\PIC_lab\NO4\lab4.X\ASM.asm
+             _.org_0_0014   0x000014    program     static F:\electricity\MCU\PIC\PIC_lab\NO4\lab4.X\ASM.asm
+             _.org_0_0019   0x000019    program     static F:\electricity\MCU\PIC\PIC_lab\NO4\lab4.X\ASM.asm
+
+
+
+                              Symbols - Sorted by Address
+                     Name    Address   Location    Storage File                     
+                ---------  ---------  ---------  --------- ---------                
+                     Main   0x000002    program     static F:\electricity\MCU\PIC\PIC_lab\NO4\lab4.X\ASM.asm
+             _.org_0_0014   0x000014    program     static F:\electricity\MCU\PIC\PIC_lab\NO4\lab4.X\ASM.asm
+             _.org_0_0019   0x000019    program     static F:\electricity\MCU\PIC\PIC_lab\NO4\lab4.X\ASM.asm
+                    Mpy_8   0x000100    program     static F:\electricity\MCU\PIC\PIC_lab\NO4\lab4.X\ASM.asm
+                    MLOOP   0x000101    program     static F:\electricity\MCU\PIC\PIC_lab\NO4\lab4.X\ASM.asm
+                    SETUP   0x00010a    program     static F:\electricity\MCU\PIC\PIC_lab\NO4\lab4.X\ASM.asm
+                    Add_8   0x000111    program     static F:\electricity\MCU\PIC\PIC_lab\NO4\lab4.X\ASM.asm
+                   Mpy_16   0x000114    program     static F:\electricity\MCU\PIC\PIC_lab\NO4\lab4.X\ASM.asm
+                  M16LOOP   0x000124    program     static F:\electricity\MCU\PIC\PIC_lab\NO4\lab4.X\ASM.asm
+                   ADD_16   0x000130    program     static F:\electricity\MCU\PIC\PIC_lab\NO4\lab4.X\ASM.asm
+
+
