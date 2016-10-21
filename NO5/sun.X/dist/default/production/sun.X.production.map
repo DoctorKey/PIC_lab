@@ -1,0 +1,48 @@
+MPLINK 5.08, LINKER
+Linker Map File - Created Mon Oct 17 23:19:24 2016
+
+                                 Section Info
+                  Section       Type    Address   Location Size(Bytes)
+                ---------  ---------  ---------  ---------  ---------
+                   .org_0       code   0x000000    program   0x000058
+                   .cinit    romdata   0x00002c    program   0x000004
+
+
+
+                              Program Memory Usage 
+                               Start         End      
+                           ---------   ---------      
+                            0x000000    0x00002d      
+            46 out of 8454 program addresses used, program memory utilization is 0%
+
+
+
+                              Symbols - Sorted by Name
+                     Name    Address   Location    Storage File                     
+                ---------  ---------  ---------  --------- ---------                
+             _.org_0_0010   0x000010    program     static F:\electricity\MCU\PIC\PIC_lab\NO5\sun.X\main.asm
+             _.org_0_0017   0x000017    program     static F:\electricity\MCU\PIC\PIC_lab\NO5\sun.X\main.asm
+             _.org_0_001E   0x00001e    program     static F:\electricity\MCU\PIC\PIC_lab\NO5\sun.X\main.asm
+             _.org_0_0020   0x000020    program     static F:\electricity\MCU\PIC\PIC_lab\NO5\sun.X\main.asm
+             _.org_0_0026   0x000026    program     static F:\electricity\MCU\PIC\PIC_lab\NO5\sun.X\main.asm
+             _.org_0_0028   0x000028    program     static F:\electricity\MCU\PIC\PIC_lab\NO5\sun.X\main.asm
+                    div16   0x000011    program     static F:\electricity\MCU\PIC\PIC_lab\NO5\sun.X\main.asm
+                div16loop   0x00001b    program     static F:\electricity\MCU\PIC\PIC_lab\NO5\sun.X\main.asm
+                     main   0x000002    program     static F:\electricity\MCU\PIC\PIC_lab\NO5\sun.X\main.asm
+
+
+
+                              Symbols - Sorted by Address
+                     Name    Address   Location    Storage File                     
+                ---------  ---------  ---------  --------- ---------                
+                     main   0x000002    program     static F:\electricity\MCU\PIC\PIC_lab\NO5\sun.X\main.asm
+             _.org_0_0010   0x000010    program     static F:\electricity\MCU\PIC\PIC_lab\NO5\sun.X\main.asm
+                    div16   0x000011    program     static F:\electricity\MCU\PIC\PIC_lab\NO5\sun.X\main.asm
+             _.org_0_0017   0x000017    program     static F:\electricity\MCU\PIC\PIC_lab\NO5\sun.X\main.asm
+                div16loop   0x00001b    program     static F:\electricity\MCU\PIC\PIC_lab\NO5\sun.X\main.asm
+             _.org_0_001E   0x00001e    program     static F:\electricity\MCU\PIC\PIC_lab\NO5\sun.X\main.asm
+             _.org_0_0020   0x000020    program     static F:\electricity\MCU\PIC\PIC_lab\NO5\sun.X\main.asm
+             _.org_0_0026   0x000026    program     static F:\electricity\MCU\PIC\PIC_lab\NO5\sun.X\main.asm
+             _.org_0_0028   0x000028    program     static F:\electricity\MCU\PIC\PIC_lab\NO5\sun.X\main.asm
+
+

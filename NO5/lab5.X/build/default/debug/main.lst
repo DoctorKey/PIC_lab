@@ -1,4 +1,4 @@
-MPASM 5.68                          MAIN.ASM   10-9-2016  14:49:50         PAGE  1
+MPASM 5.68                          MAIN.ASM   10-21-2016  0:05:06         PAGE  1
 
 
 LOC  OBJECT CODE     LINE SOURCE TEXT
@@ -32,183 +32,242 @@ LOC  OBJECT CODE     LINE SOURCE TEXT
                       00016 ;ACCCLO ;存放余数 8 位
                       00017 ;ACCCHI ;存放商 8 位
                       00018 
-Warning[207]: Found label after column 1. (MA)
-  00000020            00019  MA              EQU    0x20  ;存放乘数
-Warning[207]: Found label after column 1. (MB)
-  00000021            00020  MB              EQU    0x21  ;存放被乘数和乘积 第 8～15 位
-Warning[207]: Found label after column 1. (MC)
-  00000022            00021  MC              EQU    0x22  ;存放乘积第 0～7 位
 Warning[207]: Found label after column 1. (TEN)
-  00000023            00022  TEN              EQU    0x23  ;临时寄存器
+  00000023            00019  TEN              EQU    0x23  ;临时寄存器
 Warning[207]: Found label after column 1. (TEMP)
-  00000024            00023  TEMP         EQU    0x24  ;临时寄存器
-                      00024 
-  00000025            00025 ACCALO  equ     0x25    ;存放乘数低 8 位
+  00000024            00020  TEMP         EQU    0x24  ;临时寄存器
+                      00021 
+  00000025            00022 ACCALO  equ     0x25    ;存放被除数
 Warning[207]: Found label after column 1. (ACCAHI)
-  00000026            00026  ACCAHI equ     0x26    ;存放乘数高 8 位
+  00000026            00023  ACCAHI equ     0x26    ;存放被除数
 Warning[207]: Found label after column 1. (ACCBLO)
-  00000027            00027  ACCBLO equ     0x27    ;存放被乘数低 8 位和乘积第 16～23 位
-Warning[207]: Found label after column 1. (ACCBHI)
-  00000028            00028  ACCBHI equ     0x28     ;存放被乘数高 8 位和乘积第 24～31 位
+  00000027            00024  ACCBLO equ     0x27    ;存放除数
+  00000028            00025 NACCBLO equ     0x28    ;存放除数的补码
 Warning[207]: Found label after column 1. (ACCCLO)
-  00000029            00029  ACCCLO equ     0x29    ;存放乘积第 0～7 位
+  00000029            00026  ACCCLO equ     0x29    ;存放余数
 Warning[207]: Found label after column 1. (ACCCHI)
-  0000002A            00030  ACCCHI equ     0x2a    ;存放乘积第 8～15 位
-  0000002B            00031 BTH     equ     0x2b    ;临时寄存器
-  0000002C            00032 BTL     equ     0x2c    ;临时寄存器
-                      00033         
-MPASM 5.68                          MAIN.ASM   10-9-2016  14:49:50         PAGE  2
+  0000002A            00027  ACCCHI equ     0x2a    ;存放商
+  0000002B            00028 NO_B    equ     0x2b    ;除数的符号位
+  0000002C            00029 BTL     equ     0x2c    ;临时寄存器
+  0000002D            00030 LOG     equ     0x2d    ;报警寄存器，低两位为被除数符号位
+  0000002E            00031 COUNT   equ     0x2e    ;计数寄存器
+                      00032         
+                      00033 #define ACCA    0x3453  ;0x3453/0xb5=0x4a......0x01
+                      00034 #define ACCB    0xb5    ;0x4015/0x57=0xbc......0x31
+                      00035 
+                      00036 ;**********************************************************************
+                      00037         ORG         0x0000           ; 复位入口地址
+MPASM 5.68                          MAIN.ASM   10-21-2016  0:05:06         PAGE  2
 
 
 LOC  OBJECT CODE     LINE SOURCE TEXT
   VALUE
 
-                      00034 #define A_16    0x4015
-                      00035 #define B_16    0x3321
-                      00036 ;***************************8 ×8 位无符号乘法 宏指令***********************    
-                      00037 mpy     macro
-                      00038         MOVLW   0xFE               ; 被乘数0xFE 送 MB
-                      00039         MOVWF   MA      
-                      00040         MOVLW   0xAB               ; 乘数 0xAB送 MA
-                      00041         MOVWF   MB      
-                      00042         CALL    SETUP                    ;调用子程序，将MB 的值送 MD
-                      00043  
-                      00044         BCF          STATUS, C          ; 清进位位
-                      00045         RRF         MD                        ; MD 右移
-                      00046         BTFSC    STATUS, C           ;判断是否需要相加
-                      00047         CALL       Add_8                   ; 加乘数至 MB
-                      00048         RRF         MB                         ; 右移部分乘积
-                      00049         RRF         MC  
-                      00050         DECFSZ  TEMP                   ; 乘法完成否？
-                      00051         GOTO      $ - 7                ; 否，继续求乘积
-                      00052         endm
-                      00053 ;**********************************************************************
-                      00054         ORG         0x0000           ; 复位入口地址
-0000   0000           00055         nop                                      ; 兼容ICD调试工具，必须加nop
-0001   2???           00056         goto        Main                 ; 跳转至Main函数
-                      00057 ;**************************************Main 函数的代码**************
-0002                  00058 Main                                               
-0002   302D           00059         movlw   .45
-0003   2???           00060         call    Bin2BCD
-0004   3014           00061         movlw   .20
-0005   2???           00062         call    Bin2BCD
-0006   3037           00063         movlw   .55
-0007   2???           00064         call    Bin2BCD
-0008   3005           00065         movlw   .5
-0009   2???           00066         call    Bin2BCD
-000A   0000           00067         nop
-000B   0000           00068         nop
-000C   2???           00069         goto           $                        ; 死循环
-                      00070         
-                      00071 ;**********************二进制转BCD***************************************           
-000D                  00072 Bin2BCD
-000D   00A4           00073             movwf       TEMP    ;将w寄存器保存
-000E   01A3           00074             clrf        TEN
-000F   300A           00075             movlw       .10
-0010   02A4           00076             subwf       TEMP,f
-0011   1C03           00077             btfss       STATUS,C
-0012   2???           00078             goto        $ + 3   ;f<w
-0013   0AA3           00079             incf        TEN,f   ;f>w
-0014   2???           00080             goto        $ - 4
-0015   0724           00081             addwf       TEMP,w
-0016   0EA3           00082             swapf       TEN,f   ;将十位置于高四位
-0017   0423           00083             iorwf       TEN,w   ;w高四位十位，低四位个位
-0018   0008           00084             return
-                      00085 ;;*********************************8 ×8 位无符号乘法子程序 ********************
-                      00086 ;        ORG  0X0100
-MPASM 5.68                          MAIN.ASM   10-9-2016  14:49:50         PAGE  3
+0000   0000           00038         nop                                      ; 兼容ICD调试工具，必须加nop
+0001   2???           00039         goto        Main                 ; 跳转至Main函数
+                      00040 ;**************************************Main 函数的代码**************
+0002                  00041 Main                                               
+0002   302D           00042         movlw   .45
+0003   2???           00043         call    Bin2BCD
+0004   2???           00044         call    BCD2Bin
+0005   3014           00045         movlw   .20
+0006   2???           00046         call    Bin2BCD
+0007   2???           00047         call    BCD2Bin
+0008   3037           00048         movlw   .55
+0009   2???           00049         call    Bin2BCD
+000A   2???           00050         call    BCD2Bin
+000B   3005           00051         movlw   .5
+000C   2???           00052         call    Bin2BCD
+000D   2???           00053         call    BCD2Bin
+000E   2???           00054         call    Div_16
+000F   0000           00055         nop
+0010   2???           00056         call    Div_16_e2
+0011   0000           00057         nop
+0012   2???           00058         goto           $                        ; 死循环
+                      00059         
+                      00060 ;**********************二进制转BCD***************************************           
+0013                  00061 Bin2BCD
+0013   00A4           00062             movwf       TEMP    ;将w寄存器保存
+0014   01A3           00063             clrf        TEN     ;TEN每次清零，保证正确
+0015   300A           00064             movlw       .10     
+0016   02A4           00065             subwf       TEMP,f  ;循环，TEMP每次减10
+0017   1C03           00066             btfss       STATUS,C
+0018   2???           00067             goto        $ + 3   ;f<w
+0019   0AA3           00068             incf        TEN,f   ;f>w，ten+1,继续减
+001A   2???           00069             goto        $ - 4
+001B   0724           00070             addwf       TEMP,w  ;最后一次循环多减了10，此处加回来，得到个位
+001C   0EA3           00071             swapf       TEN,f   ;将十位置于高四位
+001D   0423           00072             iorwf       TEN,w   ;w高四位十位，低四位个位
+001E   0008           00073             return
+                      00074 ;**********************BCD转二进制***************************************
+001F                  00075 BCD2Bin
+001F   00A4           00076             movwf       TEMP    ;将w寄存器保存
+0020   39F0           00077             andlw       0xf0    ;提取高四位
+0021   00A3           00078             movwf       TEN
+0022   0E23           00079             swapf       TEN,w   ;将w寄存器十位移到低四位
+0023   1003           00080             bcf STATUS,C
+0024   0CA3           00081             rrf TEN,f   ;右移一位，即TEN*8          
+0025   07A3           00082             addwf       TEN,f
+0026   07A3           00083             addwf       TEN,f   ;加两次，即TEN*10
+0027   0824           00084             movf        TEMP,w
+0028   390F           00085             andlw       0x0f
+0029   0723           00086             addwf       TEN,w   ;十位个位相加
+002A   0008           00087             return
+                      00088 ;******************************双字节无符号数除法******************************
+                      00089 ;       ACCAHI ACCALO / ACCBLO = ACCCHI ........ ACCCLO
+002B                  00090 Div_16
+MPASM 5.68                          MAIN.ASM   10-21-2016  0:05:06         PAGE  3
 
 
 LOC  OBJECT CODE     LINE SOURCE TEXT
   VALUE
 
-                      00087 ;Mpy_8                 
-                      00088 ;            CALL    SETUP                    ;调用子程序，将MB 的值送 MD
-                      00089 ;MLOOP  
-                      00090 ;       BCF          STATUS, C          ; 清进位位
-                      00091 ;       RRF         MD                        ; MD 右移
-                      00092 ;       BTFSC    STATUS, C           ;判断是否需要相加
-                      00093 ;       CALL       Add_8                   ; 加乘数至 MB
-                      00094 ;       RRF         MB                         ; 右移部分乘积
-                      00095 ;       RRF         MC  
-                      00096 ;       DECFSZ  TEMP                   ; 乘法完成否？
-                      00097 ;       GOTO      MLOOP                ; 否，继续求乘积
-                      00098 ;       RETURN                               ; 子程序返回
-                      00099 ;; * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
-                      00100 ;SETUP  
-                      00101 ;       MOVLW    .8                        ;初始化 TEMP 寄存器 
-                      00102 ;       MOVWF    TEMP
-                      00103 ;       MOVF         MB, W              ; 乘数送MD
-                      00104 ;       MOVWF    MD             
-                      00105 ;       CLRF          MB                     ; 清 MB
-                      00106 ;        CLRF          MC                     ;清 MC
-                      00107 ;       RETURN                              ;子程序返回
-                      00108 ;Add_8         
-                      00109 ;       MOVF        MA, w                ;MA和MB相加 
-                      00110 ;       ADDWF    MB ,F  
-                      00111 ;       RETURN                               ;子程序返回  
-                      00112 ;
-                      00113 ;;*****************************16*16位无符号乘法************************
-                      00114 ;;      ACCAHI ACCALO * ACCBHI ACCBLO = ACCBHI ACCBLO ACCCHI ACCCLO
-                      00115 ;Mpy_16
-                      00116 ;       movlw   .16
-                      00117 ;       movwf   TEMP    ;移位16次
-                      00118 ;       
-                      00119 ;       movlw   high(A_16)
-                      00120 ;       movwf   ACCAHI
-                      00121 ;       movlw   low(A_16)
-                      00122 ;       movwf   ACCALO
-                      00123 ;       movlw   high(B_16)
-                      00124 ;       movwf   ACCBHI
-                      00125 ;       movwf   BTH     ;临时寄存器保存B高8位
-                      00126 ;       movlw   low(B_16)
-                      00127 ;       movwf   ACCBLO
-                      00128 ;       movwf   BTL     ;临时寄存器保存B低8位
-                      00129 ;       
-                      00130 ;       clrf    ACCBHI
-                      00131 ;       clrf    ACCBLO
-                      00132 ;       clrf    ACCCHI
-                      00133 ;       clrf    ACCCLO  ;清零
-                      00134 ;M16LOOP
-                      00135 ;       bcf     STATUS, C        ; 清进位
-                      00136 ;       rrf     BTH     ; B高8位右移
-                      00137 ;       rrf     BTL     ;B低8位右移
-                      00138 ;       btfsc   STATUS, C   ;判断是否需要相加
-                      00139 ;       call    ADD_16      ; 加乘数至 ACCB
-MPASM 5.68                          MAIN.ASM   10-9-2016  14:49:50         PAGE  4
+002B   3034           00091             movlw       high(ACCA)
+002C   00A6           00092             movwf       ACCAHI
+002D   3053           00093             movlw       low(ACCA)
+002E   00A5           00094             movwf       ACCALO
+002F   3008           00095             movlw       .8
+0030   00AE           00096             movwf       COUNT
+0031   30B5           00097             movlw       ACCB
+0032   00A7           00098             movwf       ACCBLO  ;B
+0033   0927           00099             comf        ACCBLO,w
+0034   00A8           00100             movwf       NACCBLO
+0035   0AA8           00101             incf        NACCBLO,f       ;B的补码
+0036   01AA           00102             clrf        ACCCHI
+0037   01A9           00103             clrf        ACCCLO
+0038   01AD           00104             clrf        LOG
+                      00105             
+0039   0827           00106             movf        ACCBLO,w
+003A   02A6           00107             subwf       ACCAHI,f
+003B   1C03           00108             btfss       STATUS,C
+003C   2???           00109             goto        $ + 3   
+003D   17AD           00110             bsf LOG,7   ;溢出
+003E   0008           00111             return
+003F   0827           00112 SHANG0      movf        ACCBLO,w
+Message[305]: Using default destination of 1 (file).
+0040   0DAA           00113 LOOP        rlf ACCCHI  ;商左移一位
+0041   0DA5           00114             rlf ACCALO,f
+0042   0DA6           00115             rlf ACCAHI,f        ;被除数左移一位    
+0043   07A6           00116             addwf       ACCAHI,f        ;ACCAHI=ACCAHI+w
+Message[305]: Using default destination of 1 (file).
+0044   0BAE           00117             decfsz      COUNT
+0045   2???           00118             goto        $ + 2
+0046   2???           00119             goto        LAST
+0047   1C03           00120             btfss       STATUS,C
+0048   2???           00121             goto        SHANG0  ;C=0,没有溢出
+0049   0828           00122             movf        NACCBLO,w
+004A   2???           00123             goto        LOOP
+004B                  00124 LAST    
+004B   1803           00125             btfsc       STATUS,C
+004C   2???           00126             goto        $ + 3   ;C=1,不用加
+004D   0827           00127             movf        ACCBLO,w        ;C=0,修正余数
+004E   07A6           00128             addwf       ACCAHI,f
+004F   0826           00129             movf        ACCAHI,w
+0050   00A9           00130             movwf       ACCCLO
+0051   0008           00131             return
+                      00132 ;******************************双字节无符号数除法******************************
+                      00133 ;       ACCAHI ACCALO / ACCBLO = ACCCHI ........ ACCCLO
+                      00134 ;       扩展两个符号位，不用C
+0052                  00135 Div_16_e2
+0052   3034           00136             movlw       high(ACCA)
+0053   00A6           00137             movwf       ACCAHI
+0054   3053           00138             movlw       low(ACCA)
+0055   00A5           00139             movwf       ACCALO
+0056   3008           00140             movlw       .8
+0057   00AE           00141             movwf       COUNT
+MPASM 5.68                          MAIN.ASM   10-21-2016  0:05:06         PAGE  4
 
 
 LOC  OBJECT CODE     LINE SOURCE TEXT
   VALUE
 
-                      00140 ;       rrf     ACCBHI  ; 右移部分乘积
-                      00141 ;       rrf     ACCBLO
-                      00142 ;       rrf     ACCCHI
-                      00143 ;       rrf     ACCCLO
-                      00144 ;       decfsz  TEMP    ; 乘法完成否？
-                      00145 ;       goto    M16LOOP ; 否，继续求乘积
-                      00146 ;       return          ; 子程序返回
-                      00147 ;       
-                      00148 ;ADD_16 ;ACCAHI ACCALO + ACCBHI ACCBLO = ACCBHI ACCBLO
-                      00149 ;       movf    ACCALO,w        
-                      00150 ;       addwf   ACCBLO,f        ;低8位相加，结果存入ACCBLO
-                      00151 ;       btfsc   STATUS,C        
-                      00152 ;       incf    ACCAHI,f        ;C=1;有进位，高8位加1
-                      00153 ;       movf    ACCAHI,w
-                      00154 ;       addwf   ACCBHI,f        ;高8位相加，存入ACCBHI
-                      00155 ;       return
-                      00156 
+0058   30B5           00142             movlw       ACCB
+0059   00A7           00143             movwf       ACCBLO  ;B
+005A   0927           00144             comf        ACCBLO,w
+005B   00A8           00145             movwf       NACCBLO
+005C   0AA8           00146             incf        NACCBLO,f       ;B的补码
+005D   01AA           00147             clrf        ACCCHI
+005E   01A9           00148             clrf        ACCCLO
+005F   01AD           00149             clrf        LOG
+                      00150             
+0060   2???           00151             call        sub
+0061   182D           00152             btfsc       LOG,0
+0062   1CAD           00153             btfss       LOG,1   ;LOG(0)=1
+0063   2???           00154             goto        $ + 2   ;LOG(0)=0||LOG(1)=0
+0064   2???           00155             goto        shang_e2        ;LOG(1)=1       
+0065   17AD           00156             bsf LOG,7   ;溢出
+0066   0008           00157             return 
+                      00158             
+0067   0DA5           00159 shang_e2            rlf ACCALO,f
+0068   0DA6           00160             rlf ACCAHI,f        ;被除数左移一位
+0069   0DAD           00161             rlf LOG,f   ;符号位左移一位
+                      00162             
+006A   1C2A           00163             btfss       ACCCHI,0
+006B   2???           00164             call        add     ;上次商0，这次执行加法
+006C   182A           00165             btfsc       ACCCHI,0
+006D   2???           00166             call        sub     ;上次商1，这次执行减法
+                      00167             
+Message[305]: Using default destination of 1 (file).
+006E   0DAA           00168             rlf ACCCHI  ;商左移一位
+                      00169             
+Message[305]: Using default destination of 1 (file).
+006F   0BAE           00170             decfsz      COUNT
+0070   2???           00171             goto        $ + 2
+0071   2???           00172             goto        LAST_e2 
+                      00173             
+0072   182D           00174             btfsc       LOG,0
+0073   1CAD           00175             btfss       LOG,1   ;LOG(0)=1
+0074   2???           00176             goto        $ + 3   ;LOG(0)=0||LOG(1)=0，为正数，商1
+0075   102A           00177             bcf ACCCHI,0        ;LOG(1)=1,为负数,商0
+0076   2???           00178             goto        shang_e2
+0077   142A           00179             bsf ACCCHI,0
+0078   2???           00180             goto        shang_e2
+0079                  00181 LAST_e2 
+0079   182D           00182             btfsc       LOG,0
+007A   1CAD           00183             btfss       LOG,1   ;LOG(0)=1
+007B   2???           00184             goto        $ + 3   ;LOG(0)=0||LOG(1)=0，不用修正           
+007C   2???           00185             call        add     ;LOG(1)=1,商为负，要修正
+007D   2???           00186             goto        $ + 2
+007E   142A           00187             bsf ACCCHI,0        ;商1
+007F   0826           00188             movf        ACCAHI,w
+0080   00A9           00189             movwf       ACCCLO
+0081   0008           00190             return
+                      00191 ;A+B,A为LOG(1:0)ACCAHI,B为ACCBLO，符号位为00，正数
+0082                  00192 add
+MPASM 5.68                          MAIN.ASM   10-21-2016  0:05:06         PAGE  5
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+0082   0827           00193             movf        ACCBLO,w
+0083   07A6           00194             addwf       ACCAHI,f
+0084   1803           00195             btfsc       STATUS,C
+0085   0AAD           00196             incf        LOG,f
+0086   3000           00197             movlw       0x00
+0087   07AD           00198             addwf       LOG,f
+0088   0008           00199             return
+                      00200 ;A-B，A为LOG(1:0)ACCAHI,B为NACCBLO，且符号位为11
+0089                  00201 sub
+0089   0828           00202             movf        NACCBLO,w
+008A   07A6           00203             addwf       ACCAHI,f
+008B   1803           00204             btfsc       STATUS,C
+008C   0AAD           00205             incf        LOG,f
+008D   3003           00206             movlw       0x03
+008E   07AD           00207             addwf       LOG,f
+008F   0008           00208             return
 Warning[205]: Found directive in column 1. (END)
-3F3A                  00157 END                                                     ; 程序结束
-MPASM 5.68                          MAIN.ASM   10-9-2016  14:49:50         PAGE  5
+3F3A                  00209 END                                                     ; 程序结束
+MPASM 5.68                          MAIN.ASM   10-21-2016  0:05:06         PAGE  6
 
 
 SYMBOL TABLE
   LABEL                             VALUE 
 
+ACCA                              0x3453
 ACCAHI                            00000026
 ACCALO                            00000025
-ACCBHI                            00000028
+ACCB                              0xb5
 ACCBLO                            00000027
 ACCCHI                            0000002A
 ACCCLO                            00000029
@@ -227,15 +286,13 @@ ADIF                              00000006
 ADON                              00000000
 ADRESH                            0000001E
 ADRESL                            0000009E
-A_16                              0x4015
+BCD2Bin                           0000001F
 BCLIE                             00000003
 BCLIF                             00000003
 BF                                00000000
 BRGH                              00000002
-BTH                               0000002B
 BTL                               0000002C
-B_16                              0x3321
-Bin2BCD                           0000000D
+Bin2BCD                           00000013
 C                                 00000000
 C1INV                             00000004
 C1OUT                             00000006
@@ -259,13 +316,13 @@ CCP2M2                            00000002
 CCP2M3                            00000003
 CCP2X                             00000005
 CCP2Y                             00000004
-MPASM 5.68                          MAIN.ASM   10-9-2016  14:49:50         PAGE  6
+CCPR1                             00000015
+MPASM 5.68                          MAIN.ASM   10-21-2016  0:05:06         PAGE  7
 
 
 SYMBOL TABLE
   LABEL                             VALUE 
 
-CCPR1                             00000015
 CCPR1H                            00000016
 CCPR1L                            00000015
 CCPR2                             0000001B
@@ -283,6 +340,7 @@ CM2                               00000002
 CMCON                             0000009C
 CMIE                              00000006
 CMIF                              00000006
+COUNT                             0000002E
 CREN                              00000004
 CSRC                              00000007
 CVR0                              00000000
@@ -298,6 +356,8 @@ DATA_ADDRESS                      00000005
 DC                                00000001
 D_A                               00000005
 D_NOT_A                           00000005
+Div_16                            0000002B
+Div_16_e2                         00000052
 EEADR                             0000010D
 EEADRH                            0000010F
 EECON1                            0000018C
@@ -316,14 +376,14 @@ GO                                00000002
 GO_DONE                           00000002
 GO_NOT_DONE                       00000002
 I2C_DATA                          00000005
-I2C_READ                          00000002
-I2C_START                         00000003
-MPASM 5.68                          MAIN.ASM   10-9-2016  14:49:50         PAGE  7
+MPASM 5.68                          MAIN.ASM   10-21-2016  0:05:06         PAGE  8
 
 
 SYMBOL TABLE
   LABEL                             VALUE 
 
+I2C_READ                          00000002
+I2C_START                         00000003
 I2C_STOP                          00000004
 IBF                               00000007
 IBOV                              00000005
@@ -333,10 +393,12 @@ INTE                              00000004
 INTEDG                            00000006
 INTF                              00000001
 IRP                               00000007
-MA                                00000020
-MB                                00000021
-MC                                00000022
+LAST                              0000004B
+LAST_e2                           00000079
+LOG                               0000002D
+LOOP                              00000040
 Main                              00000002
+NACCBLO                           00000028
 NOT_A                             00000005
 NOT_ADDRESS                       00000005
 NOT_BO                            00000000
@@ -351,6 +413,7 @@ NOT_TO                            00000004
 NOT_TX8                           00000006
 NOT_W                             00000002
 NOT_WRITE                         00000002
+NO_B                              0000002B
 OBF                               00000006
 OERR                              00000001
 OPTION_REG                        00000081
@@ -372,17 +435,17 @@ PORTA                             00000005
 PORTB                             00000006
 PORTC                             00000007
 PORTD                             00000008
-PORTE                             00000009
-PR2                               00000092
-PS0                               00000000
-PS1                               00000001
-PS2                               00000002
-MPASM 5.68                          MAIN.ASM   10-9-2016  14:49:50         PAGE  8
+MPASM 5.68                          MAIN.ASM   10-21-2016  0:05:06         PAGE  9
 
 
 SYMBOL TABLE
   LABEL                             VALUE 
 
+PORTE                             00000009
+PR2                               00000092
+PS0                               00000000
+PS1                               00000001
+PS2                               00000002
 PSA                               00000003
 PSPIE                             00000007
 PSPIF                             00000007
@@ -431,23 +494,24 @@ RD6                               00000006
 RD7                               00000007
 RE0                               00000000
 RE1                               00000001
-RE2                               00000002
-READ_WRITE                        00000002
-RP0                               00000005
-RP1                               00000006
-RSEN                              00000001
-MPASM 5.68                          MAIN.ASM   10-9-2016  14:49:50         PAGE  9
+MPASM 5.68                          MAIN.ASM   10-21-2016  0:05:06         PAGE 10
 
 
 SYMBOL TABLE
   LABEL                             VALUE 
 
+RE2                               00000002
+READ_WRITE                        00000002
+RP0                               00000005
+RP1                               00000006
+RSEN                              00000001
 RX9                               00000006
 RX9D                              00000000
 R_NOT_W                           00000002
 R_W                               00000002
 S                                 00000003
 SEN                               00000000
+SHANG0                            0000003F
 SMP                               00000007
 SPBRG                             00000099
 SPEN                              00000007
@@ -489,18 +553,18 @@ TMR1                              0000000E
 TMR1CS                            00000001
 TMR1H                             0000000F
 TMR1IE                            00000000
+MPASM 5.68                          MAIN.ASM   10-21-2016  0:05:06         PAGE 11
+
+
+SYMBOL TABLE
+  LABEL                             VALUE 
+
 TMR1IF                            00000000
 TMR1L                             0000000E
 TMR1ON                            00000000
 TMR2                              00000011
 TMR2IE                            00000001
 TMR2IF                            00000001
-MPASM 5.68                          MAIN.ASM   10-9-2016  14:49:50         PAGE 10
-
-
-SYMBOL TABLE
-  LABEL                             VALUE 
-
 TMR2ON                            00000002
 TOUTPS0                           00000003
 TOUTPS1                           00000004
@@ -548,18 +612,18 @@ TRMT                              00000001
 TX8_9                             00000006
 TX9                               00000006
 TX9D                              00000000
+MPASM 5.68                          MAIN.ASM   10-21-2016  0:05:06         PAGE 12
+
+
+SYMBOL TABLE
+  LABEL                             VALUE 
+
 TXD8                              00000000
 TXEN                              00000005
 TXIE                              00000004
 TXIF                              00000004
 TXREG                             00000019
 TXSTA                             00000098
-MPASM 5.68                          MAIN.ASM   10-9-2016  14:49:50         PAGE 11
-
-
-SYMBOL TABLE
-  LABEL                             VALUE 
-
 UA                                00000001
 W                                 00000000
 WCOL                              00000007
@@ -567,9 +631,17 @@ WR                                00000001
 WREN                              00000002
 WRERR                             00000003
 Z                                 00000002
-_.org_0_000C                      0000000C
 _.org_0_0012                      00000012
-_.org_0_0014                      00000014
+_.org_0_0018                      00000018
+_.org_0_001A                      0000001A
+_.org_0_003C                      0000003C
+_.org_0_0045                      00000045
+_.org_0_004C                      0000004C
+_.org_0_0063                      00000063
+_.org_0_0070                      00000070
+_.org_0_0074                      00000074
+_.org_0_007B                      0000007B
+_.org_0_007D                      0000007D
 _BODEN_OFF                        00003FBF
 _BODEN_ON                         00003FFF
 _BOREN_OFF                        00003FBF
@@ -599,6 +671,12 @@ _PWRTE_OFF                        00003FFF
 _PWRTE_ON                         00003FF7
 _RC_OSC                           00003FFF
 _WDTE_OFF                         00003FFB
+MPASM 5.68                          MAIN.ASM   10-21-2016  0:05:06         PAGE 13
+
+
+SYMBOL TABLE
+  LABEL                             VALUE 
+
 _WDTE_ON                          00003FFF
 _WDT_OFF                          00003FFB
 _WDT_ON                           00003FFF
@@ -610,16 +688,12 @@ _XT_OSC                           00003FFD
 __16F877A                         00000001
 __DEBUG                           
 __MPLAB_DEBUGGER_SIMULATOR        1
-mpy                               
-
-MPASM 5.68                          MAIN.ASM   10-9-2016  14:49:50         PAGE 12
-
-
-
-
+add                               00000082
+shang_e2                          00000067
+sub                               00000089
 
 Errors   :     0
-Warnings :    11 reported,     0 suppressed
-Messages :     0 reported,     0 suppressed
+Warnings :     7 reported,     0 suppressed
+Messages :     4 reported,     0 suppressed
 
 

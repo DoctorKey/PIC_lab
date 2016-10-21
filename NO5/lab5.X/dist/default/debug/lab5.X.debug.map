@@ -1,11 +1,11 @@
 MPLINK 5.08, LINKER
-Linker Map File - Created Sun Oct 09 14:49:52 2016
+Linker Map File - Created Fri Oct 21 00:05:08 2016
 
                                  Section Info
                   Section       Type    Address   Location Size(Bytes)
                 ---------  ---------  ---------  ---------  ---------
-                   .org_0       code   0x000000    program   0x000032
-                   .cinit    romdata   0x000019    program   0x000004
+                   .org_0       code   0x000000    program   0x000120
+                   .cinit    romdata   0x000090    program   0x000004
 .config_2007_BUILD/DEFAULT/DEBUG/MAIN.O       code   0x002007    program   0x000002
 
 
@@ -13,20 +13,38 @@ Linker Map File - Created Sun Oct 09 14:49:52 2016
                               Program Memory Usage 
                                Start         End      
                            ---------   ---------      
-                            0x000000    0x00001a      
+                            0x000000    0x000091      
                             0x002007    0x002007      
-            28 out of 8454 program addresses used, program memory utilization is 0%
+            147 out of 8454 program addresses used, program memory utilization is 1%
 
 
 
                               Symbols - Sorted by Name
                      Name    Address   Location    Storage File                     
                 ---------  ---------  ---------  --------- ---------                
-                  Bin2BCD   0x00000d    program     static F:\electricity\MCU\PIC\PIC_lab\NO5\lab5.X\main.asm
+                  BCD2Bin   0x00001f    program     static F:\electricity\MCU\PIC\PIC_lab\NO5\lab5.X\main.asm
+                  Bin2BCD   0x000013    program     static F:\electricity\MCU\PIC\PIC_lab\NO5\lab5.X\main.asm
+                   Div_16   0x00002b    program     static F:\electricity\MCU\PIC\PIC_lab\NO5\lab5.X\main.asm
+                Div_16_e2   0x000052    program     static F:\electricity\MCU\PIC\PIC_lab\NO5\lab5.X\main.asm
+                     LAST   0x00004b    program     static F:\electricity\MCU\PIC\PIC_lab\NO5\lab5.X\main.asm
+                  LAST_e2   0x000079    program     static F:\electricity\MCU\PIC\PIC_lab\NO5\lab5.X\main.asm
+                     LOOP   0x000040    program     static F:\electricity\MCU\PIC\PIC_lab\NO5\lab5.X\main.asm
                      Main   0x000002    program     static F:\electricity\MCU\PIC\PIC_lab\NO5\lab5.X\main.asm
-             _.org_0_000C   0x00000c    program     static F:\electricity\MCU\PIC\PIC_lab\NO5\lab5.X\main.asm
+                   SHANG0   0x00003f    program     static F:\electricity\MCU\PIC\PIC_lab\NO5\lab5.X\main.asm
              _.org_0_0012   0x000012    program     static F:\electricity\MCU\PIC\PIC_lab\NO5\lab5.X\main.asm
-             _.org_0_0014   0x000014    program     static F:\electricity\MCU\PIC\PIC_lab\NO5\lab5.X\main.asm
+             _.org_0_0018   0x000018    program     static F:\electricity\MCU\PIC\PIC_lab\NO5\lab5.X\main.asm
+             _.org_0_001A   0x00001a    program     static F:\electricity\MCU\PIC\PIC_lab\NO5\lab5.X\main.asm
+             _.org_0_003C   0x00003c    program     static F:\electricity\MCU\PIC\PIC_lab\NO5\lab5.X\main.asm
+             _.org_0_0045   0x000045    program     static F:\electricity\MCU\PIC\PIC_lab\NO5\lab5.X\main.asm
+             _.org_0_004C   0x00004c    program     static F:\electricity\MCU\PIC\PIC_lab\NO5\lab5.X\main.asm
+             _.org_0_0063   0x000063    program     static F:\electricity\MCU\PIC\PIC_lab\NO5\lab5.X\main.asm
+             _.org_0_0070   0x000070    program     static F:\electricity\MCU\PIC\PIC_lab\NO5\lab5.X\main.asm
+             _.org_0_0074   0x000074    program     static F:\electricity\MCU\PIC\PIC_lab\NO5\lab5.X\main.asm
+             _.org_0_007B   0x00007b    program     static F:\electricity\MCU\PIC\PIC_lab\NO5\lab5.X\main.asm
+             _.org_0_007D   0x00007d    program     static F:\electricity\MCU\PIC\PIC_lab\NO5\lab5.X\main.asm
+                      add   0x000082    program     static F:\electricity\MCU\PIC\PIC_lab\NO5\lab5.X\main.asm
+                 shang_e2   0x000067    program     static F:\electricity\MCU\PIC\PIC_lab\NO5\lab5.X\main.asm
+                      sub   0x000089    program     static F:\electricity\MCU\PIC\PIC_lab\NO5\lab5.X\main.asm
 
 
 
@@ -34,9 +52,27 @@ Linker Map File - Created Sun Oct 09 14:49:52 2016
                      Name    Address   Location    Storage File                     
                 ---------  ---------  ---------  --------- ---------                
                      Main   0x000002    program     static F:\electricity\MCU\PIC\PIC_lab\NO5\lab5.X\main.asm
-             _.org_0_000C   0x00000c    program     static F:\electricity\MCU\PIC\PIC_lab\NO5\lab5.X\main.asm
-                  Bin2BCD   0x00000d    program     static F:\electricity\MCU\PIC\PIC_lab\NO5\lab5.X\main.asm
              _.org_0_0012   0x000012    program     static F:\electricity\MCU\PIC\PIC_lab\NO5\lab5.X\main.asm
-             _.org_0_0014   0x000014    program     static F:\electricity\MCU\PIC\PIC_lab\NO5\lab5.X\main.asm
+                  Bin2BCD   0x000013    program     static F:\electricity\MCU\PIC\PIC_lab\NO5\lab5.X\main.asm
+             _.org_0_0018   0x000018    program     static F:\electricity\MCU\PIC\PIC_lab\NO5\lab5.X\main.asm
+             _.org_0_001A   0x00001a    program     static F:\electricity\MCU\PIC\PIC_lab\NO5\lab5.X\main.asm
+                  BCD2Bin   0x00001f    program     static F:\electricity\MCU\PIC\PIC_lab\NO5\lab5.X\main.asm
+                   Div_16   0x00002b    program     static F:\electricity\MCU\PIC\PIC_lab\NO5\lab5.X\main.asm
+             _.org_0_003C   0x00003c    program     static F:\electricity\MCU\PIC\PIC_lab\NO5\lab5.X\main.asm
+                   SHANG0   0x00003f    program     static F:\electricity\MCU\PIC\PIC_lab\NO5\lab5.X\main.asm
+                     LOOP   0x000040    program     static F:\electricity\MCU\PIC\PIC_lab\NO5\lab5.X\main.asm
+             _.org_0_0045   0x000045    program     static F:\electricity\MCU\PIC\PIC_lab\NO5\lab5.X\main.asm
+                     LAST   0x00004b    program     static F:\electricity\MCU\PIC\PIC_lab\NO5\lab5.X\main.asm
+             _.org_0_004C   0x00004c    program     static F:\electricity\MCU\PIC\PIC_lab\NO5\lab5.X\main.asm
+                Div_16_e2   0x000052    program     static F:\electricity\MCU\PIC\PIC_lab\NO5\lab5.X\main.asm
+             _.org_0_0063   0x000063    program     static F:\electricity\MCU\PIC\PIC_lab\NO5\lab5.X\main.asm
+                 shang_e2   0x000067    program     static F:\electricity\MCU\PIC\PIC_lab\NO5\lab5.X\main.asm
+             _.org_0_0070   0x000070    program     static F:\electricity\MCU\PIC\PIC_lab\NO5\lab5.X\main.asm
+             _.org_0_0074   0x000074    program     static F:\electricity\MCU\PIC\PIC_lab\NO5\lab5.X\main.asm
+                  LAST_e2   0x000079    program     static F:\electricity\MCU\PIC\PIC_lab\NO5\lab5.X\main.asm
+             _.org_0_007B   0x00007b    program     static F:\electricity\MCU\PIC\PIC_lab\NO5\lab5.X\main.asm
+             _.org_0_007D   0x00007d    program     static F:\electricity\MCU\PIC\PIC_lab\NO5\lab5.X\main.asm
+                      add   0x000082    program     static F:\electricity\MCU\PIC\PIC_lab\NO5\lab5.X\main.asm
+                      sub   0x000089    program     static F:\electricity\MCU\PIC\PIC_lab\NO5\lab5.X\main.asm
 
 
