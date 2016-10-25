@@ -1,5 +1,5 @@
 Warning[205] F:\ELECTRICITY\MCU\PIC\PIC_LAB\NO6\LAB6.X\MAIN.ASM 3 : Found directive in column 1. (list)
 Warning[205] F:\ELECTRICITY\MCU\PIC\PIC_LAB\NO6\LAB6.X\MAIN.ASM 5 : Found directive in column 1. (__CONFIG)
-Message[305] F:\ELECTRICITY\MCU\PIC\PIC_LAB\NO6\LAB6.X\MAIN.ASM 96 : Using default destination of 1 (file).
-Message[305] F:\ELECTRICITY\MCU\PIC\PIC_LAB\NO6\LAB6.X\MAIN.ASM 101 : Using default destination of 1 (file).
-Warning[205] F:\ELECTRICITY\MCU\PIC\PIC_LAB\NO6\LAB6.X\MAIN.ASM 105 : Found directive in column 1. (END)
+Message[305] F:\ELECTRICITY\MCU\PIC\PIC_LAB\NO6\LAB6.X\MAIN.ASM 95 : Using default destination of 1 (file).
+Message[305] F:\ELECTRICITY\MCU\PIC\PIC_LAB\NO6\LAB6.X\MAIN.ASM 97 : Using default destination of 1 (file).
+Warning[205] F:\ELECTRICITY\MCU\PIC\PIC_LAB\NO6\LAB6.X\MAIN.ASM 101 : Found directive in column 1. (END)

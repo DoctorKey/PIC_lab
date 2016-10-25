@@ -1,4 +1,4 @@
-MPASM 5.68                          MAIN.ASM   10-21-2016  15:48:34         PAGE  1
+MPASM 5.68                          MAIN.ASM   10-24-2016  21:21:42         PAGE  1
 
 
 LOC  OBJECT CODE     LINE SOURCE TEXT
@@ -57,79 +57,77 @@ Warning[205]: Found directive in column 1. (__CONFIG)
                       00039         subwf   INDF,w
                       00040         decf    FSR,f
                       00041         btfsc   STATUS,C
-MPASM 5.68                          MAIN.ASM   10-21-2016  15:48:34         PAGE  2
+MPASM 5.68                          MAIN.ASM   10-24-2016  21:21:42         PAGE  2
 
 
 LOC  OBJECT CODE     LINE SOURCE TEXT
   VALUE
 
-                      00042         goto    $ + 10  ;sort_b>sort_a
-                      00043 ;       bsf     log,0   ;记录有交换
-                      00044         incf    FSR,f
-                      00045         movf    INDF,w  ;sort_b<sort_a
-                      00046         movwf   sort_j
-                      00047         movf    sort_i,w
-                      00048         movwf   INDF
-                      00049         decf    FSR,f
-                      00050         movf    sort_j,w
-                      00051         movwf   INDF
-                      00052         endm
-                      00053 ;**********************************************************************
-                      00054         ORG         0x0000           ; 复位入口地址
-0000   0000           00055         nop                                      ; 兼容ICD调试工具，必须加nop
-0001   2???           00056         goto        Main                 ; 跳转至Main函数
-                      00057 ;**************************************Main 函数的代码**************
-0002                  00058 Main                                               
-0002   2???           00059         call    setup
-0003   2???           00060         call    paixu
-0004   0000           00061         nop
-0005   2???           00062         goto           $                        ; 死循环
-0006                  00063 setup
-0006   300F           00064         movlw   num1
-0007   00A0           00065         movwf   sort_0
-0008   300C           00066         movlw   num2
-0009   00A1           00067         movwf   sort_1
-000A   3011           00068         movlw   num3
-000B   00A2           00069         movwf   sort_2
-000C   300E           00070         movlw   num4
-000D   00A3           00071         movwf   sort_3
-000E   3013           00072         movlw   num5
-000F   00A4           00073         movwf   sort_4
-0010   300B           00074         movlw   num6
-0011   00A5           00075         movwf   sort_5
-0012   3001           00076         movlw   num7
-0013   00A6           00077         movwf   sort_6
-0014   3017           00078         movlw   num8
-0015   00A7           00079         movwf   sort_7
-0016   3015           00080         movlw   num9
-0017   00A8           00081         movwf   sort_8
-0018   3014           00082         movlw   num10
-0019   00A9           00083         movwf   sort_9
-001A   0008           00084         return
-                      00085         
-                      00086 ;*********************冒泡排序*****************************
-001B                  00087 paixu
-001B   3009           00088         movlw   .9
-001C   00AB           00089         movwf   count_i
-001D   082B           00090 out_loop        movf    count_i,w
-001E   00AC           00091         movwf   count_j
-001F   3020           00092         movlw   sort_0
-0020   0084           00093         movwf   FSR
-                      00094 in_loop compare 
-MPASM 5.68                          MAIN.ASM   10-21-2016  15:48:34         PAGE  3
-
-
-LOC  OBJECT CODE     LINE SOURCE TEXT
-  VALUE
-
+                      00042         goto    $ + 9   ;sort_b>sort_a
+                      00043         incf    FSR,f
+                      00044         movf    INDF,w  ;sort_b<sort_a
+                      00045         movwf   sort_j
+                      00046         movf    sort_i,w
+                      00047         movwf   INDF
+                      00048         decf    FSR,f
+                      00049         movf    sort_j,w
+                      00050         movwf   INDF
+                      00051         endm
+                      00052 ;**********************************************************************
+                      00053         ORG         0x0000           ; 复位入口地址
+0000   0000           00054         nop                                      ; 兼容ICD调试工具，必须加nop
+0001   2???           00055         goto        Main                 ; 跳转至Main函数
+                      00056 ;**************************************Main 函数的代码**************
+0002                  00057 Main                                               
+0002   2???           00058         call    setup
+0003   2???           00059         call    paixu
+0004   0000           00060         nop
+0005   2???           00061         goto           $                        ; 死循环
+0006                  00062 setup
+0006   300F           00063         movlw   num1
+0007   00A0           00064         movwf   sort_0
+0008   300C           00065         movlw   num2
+0009   00A1           00066         movwf   sort_1
+000A   3011           00067         movlw   num3
+000B   00A2           00068         movwf   sort_2
+000C   300E           00069         movlw   num4
+000D   00A3           00070         movwf   sort_3
+000E   3013           00071         movlw   num5
+000F   00A4           00072         movwf   sort_4
+0010   300B           00073         movlw   num6
+0011   00A5           00074         movwf   sort_5
+0012   3001           00075         movlw   num7
+0013   00A6           00076         movwf   sort_6
+0014   3017           00077         movlw   num8
+0015   00A7           00078         movwf   sort_7
+0016   3015           00079         movlw   num9
+0017   00A8           00080         movwf   sort_8
+0018   3014           00081         movlw   num10
+0019   00A9           00082         movwf   sort_9
+001A   0008           00083         return
+                      00084         
+                      00085 ;*********************冒泡排序*****************************
+001B                  00086 paixu
+001B   3009           00087         movlw   .9
+001C   00AB           00088         movwf   count_i
+001D   082B           00089 out_loop        movf    count_i,w
+001E   00AC           00090         movwf   count_j
+001F   3020           00091         movlw   sort_0
+0020   0084           00092         movwf   FSR
+                      00093 in_loop compare 
 0021   0800               M         movf    INDF,w
+MPASM 5.68                          MAIN.ASM   10-24-2016  21:21:42         PAGE  3
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
 0022   00AD               M         movwf   sort_i  ;低位保存到i
 0023   0A84               M         incf    FSR,f
 0024   0200               M         subwf   INDF,w
 0025   0384               M         decf    FSR,f
 0026   1803               M         btfsc   STATUS,C
-0027   2???               M         goto    $ + 10  ;sort_b>sort_a
-                          M ;       bsf     log,0   ;记录有交换
+0027   2???               M         goto    $ + 9   ;sort_b>sort_a
 0028   0A84               M         incf    FSR,f
 0029   0800               M         movf    INDF,w  ;sort_b<sort_a
 002A   00AE               M         movwf   sort_j
@@ -138,21 +136,18 @@ LOC  OBJECT CODE     LINE SOURCE TEXT
 002D   0384               M         decf    FSR,f
 002E   082E               M         movf    sort_j,w
 002F   0080               M         movwf   INDF
-0030   0A84           00095         incf    FSR,f   ;右移一个
+0030   0A84           00094         incf    FSR,f   ;右移一个
 Message[305]: Using default destination of 1 (file).
-0031   0BAC           00096         decfsz  count_j ;内循环减一
-0032   2???           00097         goto    in_loop
-                      00098 ;       btfss   log,0
-                      00099 ;       return          ;本次没有交换，排序完成
-                      00100 ;       bcf     log,0   ;有交换，清标志位
+0031   0BAC           00095         decfsz  count_j ;内循环减一
+0032   2???           00096         goto    in_loop
 Message[305]: Using default destination of 1 (file).
-0033   0BAB           00101         decfsz  count_i ;外循环减一
-0034   2???           00102         goto    out_loop
-0035   0008           00103         return
-                      00104 
+0033   0BAB           00097         decfsz  count_i ;外循环减一
+0034   2???           00098         goto    out_loop
+0035   0008           00099         return
+                      00100 
 Warning[205]: Found directive in column 1. (END)
-3F3A                  00105 END                                                     ; 程序结束
-MPASM 5.68                          MAIN.ASM   10-21-2016  15:48:34         PAGE  4
+3F3A                  00101 END                                                     ; 程序结束
+MPASM 5.68                          MAIN.ASM   10-24-2016  21:21:42         PAGE  4
 
 
 SYMBOL TABLE
@@ -211,7 +206,7 @@ CHS1                              00000004
 CHS2                              00000005
 CIS                               00000003
 CKE                               00000006
-MPASM 5.68                          MAIN.ASM   10-21-2016  15:48:34         PAGE  5
+MPASM 5.68                          MAIN.ASM   10-24-2016  21:21:42         PAGE  5
 
 
 SYMBOL TABLE
@@ -270,7 +265,7 @@ INTF                              00000001
 IRP                               00000007
 Main                              00000002
 NOT_A                             00000005
-MPASM 5.68                          MAIN.ASM   10-21-2016  15:48:34         PAGE  6
+MPASM 5.68                          MAIN.ASM   10-24-2016  21:21:42         PAGE  6
 
 
 SYMBOL TABLE
@@ -329,7 +324,7 @@ RA5                               00000005
 RB0                               00000000
 RB1                               00000001
 RB2                               00000002
-MPASM 5.68                          MAIN.ASM   10-21-2016  15:48:34         PAGE  7
+MPASM 5.68                          MAIN.ASM   10-24-2016  21:21:42         PAGE  7
 
 
 SYMBOL TABLE
@@ -388,7 +383,7 @@ SSPADD                            00000093
 SSPBUF                            00000013
 SSPCON                            00000014
 SSPCON2                           00000091
-MPASM 5.68                          MAIN.ASM   10-21-2016  15:48:34         PAGE  8
+MPASM 5.68                          MAIN.ASM   10-24-2016  21:21:42         PAGE  8
 
 
 SYMBOL TABLE
@@ -447,7 +442,7 @@ TRISB                             00000086
 TRISB0                            00000000
 TRISB1                            00000001
 TRISB2                            00000002
-MPASM 5.68                          MAIN.ASM   10-21-2016  15:48:34         PAGE  9
+MPASM 5.68                          MAIN.ASM   10-24-2016  21:21:42         PAGE  9
 
 
 SYMBOL TABLE
@@ -506,7 +501,7 @@ _BOREN_ON                         00003FFF
 _CONFIG                           00002007
 _CPD_OFF                          00003FFF
 _CPD_ON                           00003EFF
-MPASM 5.68                          MAIN.ASM   10-21-2016  15:48:34         PAGE 10
+MPASM 5.68                          MAIN.ASM   10-24-2016  21:21:42         PAGE 10
 
 
 SYMBOL TABLE
@@ -565,7 +560,7 @@ paixu                             0000001B
 setup                             00000006
 sort_0                            00000020
 sort_1                            00000021
-MPASM 5.68                          MAIN.ASM   10-21-2016  15:48:34         PAGE 11
+MPASM 5.68                          MAIN.ASM   10-24-2016  21:21:42         PAGE 11
 
 
 SYMBOL TABLE

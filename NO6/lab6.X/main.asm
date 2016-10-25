@@ -40,7 +40,6 @@ compare	macro
 	decf	FSR,f
 	btfsc	STATUS,C
 	goto	$ + 9	;sort_b>sort_a
-;	bsf	log,0	;记录有交换
 	incf	FSR,f
 	movf	INDF,w	;sort_b<sort_a
 	movwf	sort_j
@@ -95,9 +94,6 @@ in_loop	compare
 	incf	FSR,f	;右移一个
 	decfsz	count_j	;内循环减一
 	goto	in_loop
-;	btfss	log,0
-;	return		;本次没有交换，排序完成
-;	bcf	log,0	;有交换，清标志位
 	decfsz	count_i	;外循环减一
 	goto	out_loop
 	return
