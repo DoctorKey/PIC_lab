@@ -1,0 +1,21 @@
+Message[302] F:\ELECTRICITY\MCU\PIC\PIC_LAB\NO7\LAB7.X\ASM.ASM 72 : Register in operand not in bank 0.  Ensure that bank bits are correct.
+Message[302] F:\ELECTRICITY\MCU\PIC\PIC_LAB\NO7\LAB7.X\ASM.ASM 73 : Register in operand not in bank 0.  Ensure that bank bits are correct.
+Message[305] F:\ELECTRICITY\MCU\PIC\PIC_LAB\NO7\LAB7.X\ASM.ASM 105 : Using default destination of 1 (file).
+Message[305] F:\ELECTRICITY\MCU\PIC\PIC_LAB\NO7\LAB7.X\ASM.ASM 118 : Using default destination of 1 (file).
+Message[305] F:\ELECTRICITY\MCU\PIC\PIC_LAB\NO7\LAB7.X\ASM.ASM 131 : Using default destination of 1 (file).
+Message[305] F:\ELECTRICITY\MCU\PIC\PIC_LAB\NO7\LAB7.X\ASM.ASM 146 : Using default destination of 1 (file).
+Message[305] F:\ELECTRICITY\MCU\PIC\PIC_LAB\NO7\LAB7.X\ASM.ASM 166 : Using default destination of 1 (file).
+Message[305] F:\ELECTRICITY\MCU\PIC\PIC_LAB\NO7\LAB7.X\ASM.ASM 188 : Using default destination of 1 (file).
+Message[305] F:\ELECTRICITY\MCU\PIC\PIC_LAB\NO7\LAB7.X\ASM.ASM 190 : Using default destination of 1 (file).
+Warning[202] F:\ELECTRICITY\MCU\PIC\PIC_LAB\NO7\LAB7.X\ASM.ASM 198 : Argument out of range.  Least significant bits used.
+Message[305] F:\ELECTRICITY\MCU\PIC\PIC_LAB\NO7\LAB7.X\ASM.ASM 211 : Using default destination of 1 (file).
+Message[305] F:\ELECTRICITY\MCU\PIC\PIC_LAB\NO7\LAB7.X\ASM.ASM 213 : Using default destination of 1 (file).
+Message[302] F:\ELECTRICITY\MCU\PIC\PIC_LAB\NO7\LAB7.X\ASM.ASM 228 : Register in operand not in bank 0.  Ensure that bank bits are correct.
+Message[302] F:\ELECTRICITY\MCU\PIC\PIC_LAB\NO7\LAB7.X\ASM.ASM 229 : Register in operand not in bank 0.  Ensure that bank bits are correct.
+Message[302] F:\ELECTRICITY\MCU\PIC\PIC_LAB\NO7\LAB7.X\ASM.ASM 230 : Register in operand not in bank 0.  Ensure that bank bits are correct.
+Message[302] F:\ELECTRICITY\MCU\PIC\PIC_LAB\NO7\LAB7.X\ASM.ASM 231 : Register in operand not in bank 0.  Ensure that bank bits are correct.
+Warning[207] F:\ELECTRICITY\MCU\PIC\PIC_LAB\NO7\LAB7.X\ASM.ASM 246 : Found label after column 1. (SET0_595)
+Message[302] F:\ELECTRICITY\MCU\PIC\PIC_LAB\NO7\LAB7.X\ASM.ASM 264 : Register in operand not in bank 0.  Ensure that bank bits are correct.
+Message[302] F:\ELECTRICITY\MCU\PIC\PIC_LAB\NO7\LAB7.X\ASM.ASM 265 : Register in operand not in bank 0.  Ensure that bank bits are correct.
+Message[302] F:\ELECTRICITY\MCU\PIC\PIC_LAB\NO7\LAB7.X\ASM.ASM 266 : Register in operand not in bank 0.  Ensure that bank bits are correct.
+Warning[205] F:\ELECTRICITY\MCU\PIC\PIC_LAB\NO7\LAB7.X\ASM.ASM 293 : Found directive in column 1. (END)

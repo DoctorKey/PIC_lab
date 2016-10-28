@@ -1,0 +1,15 @@
+Message[302] F:\ELECTRICITY\MCU\PIC\PIC_LAB\NO7\LAB7.X\ASM.ASM 84 : Register in operand not in bank 0.  Ensure that bank bits are correct.
+Message[302] F:\ELECTRICITY\MCU\PIC\PIC_LAB\NO7\LAB7.X\ASM.ASM 85 : Register in operand not in bank 0.  Ensure that bank bits are correct.
+Message[302] F:\ELECTRICITY\MCU\PIC\PIC_LAB\NO7\LAB7.X\ASM.ASM 92 : Register in operand not in bank 0.  Ensure that bank bits are correct.
+Message[302] F:\ELECTRICITY\MCU\PIC\PIC_LAB\NO7\LAB7.X\ASM.ASM 93 : Register in operand not in bank 0.  Ensure that bank bits are correct.
+Message[302] F:\ELECTRICITY\MCU\PIC\PIC_LAB\NO7\LAB7.X\ASM.ASM 94 : Register in operand not in bank 0.  Ensure that bank bits are correct.
+Message[302] F:\ELECTRICITY\MCU\PIC\PIC_LAB\NO7\LAB7.X\ASM.ASM 95 : Register in operand not in bank 0.  Ensure that bank bits are correct.
+Message[302] F:\ELECTRICITY\MCU\PIC\PIC_LAB\NO7\LAB7.X\ASM.ASM 118 : Register in operand not in bank 0.  Ensure that bank bits are correct.
+Message[302] F:\ELECTRICITY\MCU\PIC\PIC_LAB\NO7\LAB7.X\ASM.ASM 119 : Register in operand not in bank 0.  Ensure that bank bits are correct.
+Message[302] F:\ELECTRICITY\MCU\PIC\PIC_LAB\NO7\LAB7.X\ASM.ASM 120 : Register in operand not in bank 0.  Ensure that bank bits are correct.
+Message[302] F:\ELECTRICITY\MCU\PIC\PIC_LAB\NO7\LAB7.X\ASM.ASM 121 : Register in operand not in bank 0.  Ensure that bank bits are correct.
+Warning[207] F:\ELECTRICITY\MCU\PIC\PIC_LAB\NO7\LAB7.X\ASM.ASM 136 : Found label after column 1. (SET0_595)
+Message[302] F:\ELECTRICITY\MCU\PIC\PIC_LAB\NO7\LAB7.X\ASM.ASM 154 : Register in operand not in bank 0.  Ensure that bank bits are correct.
+Message[302] F:\ELECTRICITY\MCU\PIC\PIC_LAB\NO7\LAB7.X\ASM.ASM 155 : Register in operand not in bank 0.  Ensure that bank bits are correct.
+Message[302] F:\ELECTRICITY\MCU\PIC\PIC_LAB\NO7\LAB7.X\ASM.ASM 156 : Register in operand not in bank 0.  Ensure that bank bits are correct.
+Warning[205] F:\ELECTRICITY\MCU\PIC\PIC_LAB\NO7\LAB7.X\ASM.ASM 183 : Found directive in column 1. (END)

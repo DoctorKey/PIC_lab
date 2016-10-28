@@ -1,0 +1,15 @@
+Message[302] F:\ELECTRICITY\MCU\PIC\PIC_LAB\NO7\LAB7.X\ASM3.ASM 82 : Register in operand not in bank 0.  Ensure that bank bits are correct.
+Message[302] F:\ELECTRICITY\MCU\PIC\PIC_LAB\NO7\LAB7.X\ASM3.ASM 83 : Register in operand not in bank 0.  Ensure that bank bits are correct.
+Message[302] F:\ELECTRICITY\MCU\PIC\PIC_LAB\NO7\LAB7.X\ASM3.ASM 90 : Register in operand not in bank 0.  Ensure that bank bits are correct.
+Message[302] F:\ELECTRICITY\MCU\PIC\PIC_LAB\NO7\LAB7.X\ASM3.ASM 91 : Register in operand not in bank 0.  Ensure that bank bits are correct.
+Message[302] F:\ELECTRICITY\MCU\PIC\PIC_LAB\NO7\LAB7.X\ASM3.ASM 92 : Register in operand not in bank 0.  Ensure that bank bits are correct.
+Message[302] F:\ELECTRICITY\MCU\PIC\PIC_LAB\NO7\LAB7.X\ASM3.ASM 93 : Register in operand not in bank 0.  Ensure that bank bits are correct.
+Message[302] F:\ELECTRICITY\MCU\PIC\PIC_LAB\NO7\LAB7.X\ASM3.ASM 131 : Register in operand not in bank 0.  Ensure that bank bits are correct.
+Message[302] F:\ELECTRICITY\MCU\PIC\PIC_LAB\NO7\LAB7.X\ASM3.ASM 132 : Register in operand not in bank 0.  Ensure that bank bits are correct.
+Message[302] F:\ELECTRICITY\MCU\PIC\PIC_LAB\NO7\LAB7.X\ASM3.ASM 133 : Register in operand not in bank 0.  Ensure that bank bits are correct.
+Message[302] F:\ELECTRICITY\MCU\PIC\PIC_LAB\NO7\LAB7.X\ASM3.ASM 134 : Register in operand not in bank 0.  Ensure that bank bits are correct.
+Warning[207] F:\ELECTRICITY\MCU\PIC\PIC_LAB\NO7\LAB7.X\ASM3.ASM 149 : Found label after column 1. (SET0_595)
+Message[302] F:\ELECTRICITY\MCU\PIC\PIC_LAB\NO7\LAB7.X\ASM3.ASM 167 : Register in operand not in bank 0.  Ensure that bank bits are correct.
+Message[302] F:\ELECTRICITY\MCU\PIC\PIC_LAB\NO7\LAB7.X\ASM3.ASM 168 : Register in operand not in bank 0.  Ensure that bank bits are correct.
+Message[302] F:\ELECTRICITY\MCU\PIC\PIC_LAB\NO7\LAB7.X\ASM3.ASM 169 : Register in operand not in bank 0.  Ensure that bank bits are correct.
+Warning[205] F:\ELECTRICITY\MCU\PIC\PIC_LAB\NO7\LAB7.X\ASM3.ASM 196 : Found directive in column 1. (END)

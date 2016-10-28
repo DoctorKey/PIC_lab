@@ -1,0 +1,74 @@
+MPLINK 5.08, LINKER
+Linker Map File - Created Fri Oct 28 14:21:25 2016
+
+                                 Section Info
+                  Section       Type    Address   Location Size(Bytes)
+                ---------  ---------  ---------  ---------  ---------
+                   .org_0       code   0x000000    program   0x000004
+                   .org_1       code   0x000004    program   0x0000b2
+                   .cinit    romdata   0x001800    program   0x000004
+                    dbgP0       code   0x001f00    program   0x000200
+.config_2007_BUILD/DEFAULT/DEBUG/ASM.O       code   0x002007    program   0x000002
+                    dbgD0      udata   0x000070       data   0x000001
+                    dbgD1      udata   0x0000f0       data   0x000001
+                    dbgD2      udata   0x000170       data   0x000001
+                    dbgD3      udata   0x0001e5       data   0x00000b
+                    dbgD4      udata   0x0001f0       data   0x000001
+
+
+
+                              Program Memory Usage 
+                               Start         End      
+                           ---------   ---------      
+                            0x000000    0x000001      
+                            0x000004    0x00005c      
+                            0x001800    0x001801      
+                            0x001f00    0x001fff      
+                            0x002007    0x002007      
+            350 out of 8454 program addresses used, program memory utilization is 4%
+
+
+
+                              Symbols - Sorted by Name
+                     Name    Address   Location    Storage File                     
+                ---------  ---------  ---------  --------- ---------                
+                Clock_595   0x00003b    program     static F:\electricity\MCU\PIC\PIC_lab\NO7\lab7.X\ASM.asm
+                  DelayMS   0x000051    program     static F:\electricity\MCU\PIC\PIC_lab\NO7\lab7.X\ASM.asm
+                 EndOfInt   0x000009    program     static F:\electricity\MCU\PIC\PIC_lab\NO7\lab7.X\ASM.asm
+               HC595_Init   0x000027    program     static F:\electricity\MCU\PIC\PIC_lab\NO7\lab7.X\ASM.asm
+         HC595_Write_Byte   0x00002f    program     static F:\electricity\MCU\PIC\PIC_lab\NO7\lab7.X\ASM.asm
+                      LL1   0x000052    program     static F:\electricity\MCU\PIC\PIC_lab\NO7\lab7.X\ASM.asm
+                      LL2   0x000054    program     static F:\electricity\MCU\PIC\PIC_lab\NO7\lab7.X\ASM.asm
+                      LL3   0x000056    program     static F:\electricity\MCU\PIC\PIC_lab\NO7\lab7.X\ASM.asm
+                     Loop   0x000020    program     static F:\electricity\MCU\PIC\PIC_lab\NO7\lab7.X\ASM.asm
+                 Loop_595   0x000034    program     static F:\electricity\MCU\PIC\PIC_lab\NO7\lab7.X\ASM.asm
+                 SET0_595   0x000039    program     static F:\electricity\MCU\PIC\PIC_lab\NO7\lab7.X\ASM.asm
+                 SET1_595   0x000037    program     static F:\electricity\MCU\PIC\PIC_lab\NO7\lab7.X\ASM.asm
+            TurnOff_7LEDs   0x000046    program     static F:\electricity\MCU\PIC\PIC_lab\NO7\lab7.X\ASM.asm
+                   equal0   0x000025    program     static F:\electricity\MCU\PIC\PIC_lab\NO7\lab7.X\ASM.asm
+                   equal1   0x000023    program     static F:\electricity\MCU\PIC\PIC_lab\NO7\lab7.X\ASM.asm
+                     main   0x000010    program     static F:\electricity\MCU\PIC\PIC_lab\NO7\lab7.X\ASM.asm
+
+
+
+                              Symbols - Sorted by Address
+                     Name    Address   Location    Storage File                     
+                ---------  ---------  ---------  --------- ---------                
+                 EndOfInt   0x000009    program     static F:\electricity\MCU\PIC\PIC_lab\NO7\lab7.X\ASM.asm
+                     main   0x000010    program     static F:\electricity\MCU\PIC\PIC_lab\NO7\lab7.X\ASM.asm
+                     Loop   0x000020    program     static F:\electricity\MCU\PIC\PIC_lab\NO7\lab7.X\ASM.asm
+                   equal1   0x000023    program     static F:\electricity\MCU\PIC\PIC_lab\NO7\lab7.X\ASM.asm
+                   equal0   0x000025    program     static F:\electricity\MCU\PIC\PIC_lab\NO7\lab7.X\ASM.asm
+               HC595_Init   0x000027    program     static F:\electricity\MCU\PIC\PIC_lab\NO7\lab7.X\ASM.asm
+         HC595_Write_Byte   0x00002f    program     static F:\electricity\MCU\PIC\PIC_lab\NO7\lab7.X\ASM.asm
+                 Loop_595   0x000034    program     static F:\electricity\MCU\PIC\PIC_lab\NO7\lab7.X\ASM.asm
+                 SET1_595   0x000037    program     static F:\electricity\MCU\PIC\PIC_lab\NO7\lab7.X\ASM.asm
+                 SET0_595   0x000039    program     static F:\electricity\MCU\PIC\PIC_lab\NO7\lab7.X\ASM.asm
+                Clock_595   0x00003b    program     static F:\electricity\MCU\PIC\PIC_lab\NO7\lab7.X\ASM.asm
+            TurnOff_7LEDs   0x000046    program     static F:\electricity\MCU\PIC\PIC_lab\NO7\lab7.X\ASM.asm
+                  DelayMS   0x000051    program     static F:\electricity\MCU\PIC\PIC_lab\NO7\lab7.X\ASM.asm
+                      LL1   0x000052    program     static F:\electricity\MCU\PIC\PIC_lab\NO7\lab7.X\ASM.asm
+                      LL2   0x000054    program     static F:\electricity\MCU\PIC\PIC_lab\NO7\lab7.X\ASM.asm
+                      LL3   0x000056    program     static F:\electricity\MCU\PIC\PIC_lab\NO7\lab7.X\ASM.asm
+
+

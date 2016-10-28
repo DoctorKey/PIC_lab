@@ -1,0 +1,16 @@
+Warning[205] F:\ELECTRICITY\MCU\PIC\PIC_LAB\NO7\LAB7.X\MAIN2.ASM 80 : Found directive in column 1. (org)
+Message[302] F:\ELECTRICITY\MCU\PIC\PIC_LAB\NO7\LAB7.X\MAIN2.ASM 177 : Register in operand not in bank 0.  Ensure that bank bits are correct.
+Message[302] F:\ELECTRICITY\MCU\PIC\PIC_LAB\NO7\LAB7.X\MAIN2.ASM 178 : Register in operand not in bank 0.  Ensure that bank bits are correct.
+Message[302] F:\ELECTRICITY\MCU\PIC\PIC_LAB\NO7\LAB7.X\MAIN2.ASM 185 : Register in operand not in bank 0.  Ensure that bank bits are correct.
+Message[302] F:\ELECTRICITY\MCU\PIC\PIC_LAB\NO7\LAB7.X\MAIN2.ASM 186 : Register in operand not in bank 0.  Ensure that bank bits are correct.
+Message[302] F:\ELECTRICITY\MCU\PIC\PIC_LAB\NO7\LAB7.X\MAIN2.ASM 187 : Register in operand not in bank 0.  Ensure that bank bits are correct.
+Message[302] F:\ELECTRICITY\MCU\PIC\PIC_LAB\NO7\LAB7.X\MAIN2.ASM 188 : Register in operand not in bank 0.  Ensure that bank bits are correct.
+Message[302] F:\ELECTRICITY\MCU\PIC\PIC_LAB\NO7\LAB7.X\MAIN2.ASM 223 : Register in operand not in bank 0.  Ensure that bank bits are correct.
+Message[302] F:\ELECTRICITY\MCU\PIC\PIC_LAB\NO7\LAB7.X\MAIN2.ASM 224 : Register in operand not in bank 0.  Ensure that bank bits are correct.
+Message[302] F:\ELECTRICITY\MCU\PIC\PIC_LAB\NO7\LAB7.X\MAIN2.ASM 225 : Register in operand not in bank 0.  Ensure that bank bits are correct.
+Warning[207] F:\ELECTRICITY\MCU\PIC\PIC_LAB\NO7\LAB7.X\MAIN2.ASM 240 : Found label after column 1. (SET0_595)
+Message[302] F:\ELECTRICITY\MCU\PIC\PIC_LAB\NO7\LAB7.X\MAIN2.ASM 259 : Register in operand not in bank 0.  Ensure that bank bits are correct.
+Message[302] F:\ELECTRICITY\MCU\PIC\PIC_LAB\NO7\LAB7.X\MAIN2.ASM 260 : Register in operand not in bank 0.  Ensure that bank bits are correct.
+Message[302] F:\ELECTRICITY\MCU\PIC\PIC_LAB\NO7\LAB7.X\MAIN2.ASM 261 : Register in operand not in bank 0.  Ensure that bank bits are correct.
+Message[302] F:\ELECTRICITY\MCU\PIC\PIC_LAB\NO7\LAB7.X\MAIN2.ASM 262 : Register in operand not in bank 0.  Ensure that bank bits are correct.
+Warning[205] F:\ELECTRICITY\MCU\PIC\PIC_LAB\NO7\LAB7.X\MAIN2.ASM 316 : Found directive in column 1. (END)

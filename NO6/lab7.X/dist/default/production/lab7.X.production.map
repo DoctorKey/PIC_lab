@@ -1,0 +1,103 @@
+MPLINK 5.08, LINKER
+Linker Map File - Created Fri Oct 28 14:02:04 2016
+
+                                 Section Info
+                  Section       Type    Address   Location Size(Bytes)
+                ---------  ---------  ---------  ---------  ---------
+                   .org_0       code   0x000000    program   0x000004
+                   .cinit    romdata   0x000002    program   0x000004
+                   .org_1       code   0x000004    program   0x000186
+.config_2007_BUILD/DEFAULT/PRODUCTION/ASM.O       code   0x002007    program   0x000002
+
+
+
+                              Program Memory Usage 
+                               Start         End      
+                           ---------   ---------      
+                            0x000000    0x0000c6      
+                            0x002007    0x002007      
+            200 out of 8454 program addresses used, program memory utilization is 2%
+
+
+
+                              Symbols - Sorted by Name
+                     Name    Address   Location    Storage File                     
+                ---------  ---------  ---------  --------- ---------                
+                Clock_595   0x0000a5    program     static F:\electricity\MCU\PIC\PIC_lab\NO7\lab7.X\ASM.asm
+                  DelayMS   0x0000bb    program     static F:\electricity\MCU\PIC\PIC_lab\NO7\lab7.X\ASM.asm
+                 EndOfInt   0x000009    program     static F:\electricity\MCU\PIC\PIC_lab\NO7\lab7.X\ASM.asm
+               HC595_Init   0x000091    program     static F:\electricity\MCU\PIC\PIC_lab\NO7\lab7.X\ASM.asm
+         HC595_Write_Byte   0x000099    program     static F:\electricity\MCU\PIC\PIC_lab\NO7\lab7.X\ASM.asm
+                      LL1   0x0000bc    program     static F:\electricity\MCU\PIC\PIC_lab\NO7\lab7.X\ASM.asm
+                      LL2   0x0000be    program     static F:\electricity\MCU\PIC\PIC_lab\NO7\lab7.X\ASM.asm
+                      LL3   0x0000c0    program     static F:\electricity\MCU\PIC\PIC_lab\NO7\lab7.X\ASM.asm
+                 Loop_595   0x00009e    program     static F:\electricity\MCU\PIC\PIC_lab\NO7\lab7.X\ASM.asm
+                 SET0_595   0x0000a3    program     static F:\electricity\MCU\PIC\PIC_lab\NO7\lab7.X\ASM.asm
+                 SET1_595   0x0000a1    program     static F:\electricity\MCU\PIC\PIC_lab\NO7\lab7.X\ASM.asm
+            TurnOff_7LEDs   0x0000b0    program     static F:\electricity\MCU\PIC\PIC_lab\NO7\lab7.X\ASM.asm
+             _.org_1_0023   0x000023    program     static F:\electricity\MCU\PIC\PIC_lab\NO7\lab7.X\ASM.asm
+             _.org_1_0024   0x000024    program     static F:\electricity\MCU\PIC\PIC_lab\NO7\lab7.X\ASM.asm
+             _.org_1_002B   0x00002b    program     static F:\electricity\MCU\PIC\PIC_lab\NO7\lab7.X\ASM.asm
+             _.org_1_002F   0x00002f    program     static F:\electricity\MCU\PIC\PIC_lab\NO7\lab7.X\ASM.asm
+             _.org_1_0030   0x000030    program     static F:\electricity\MCU\PIC\PIC_lab\NO7\lab7.X\ASM.asm
+             _.org_1_0037   0x000037    program     static F:\electricity\MCU\PIC\PIC_lab\NO7\lab7.X\ASM.asm
+             _.org_1_003B   0x00003b    program     static F:\electricity\MCU\PIC\PIC_lab\NO7\lab7.X\ASM.asm
+             _.org_1_003C   0x00003c    program     static F:\electricity\MCU\PIC\PIC_lab\NO7\lab7.X\ASM.asm
+             _.org_1_0043   0x000043    program     static F:\electricity\MCU\PIC\PIC_lab\NO7\lab7.X\ASM.asm
+             _.org_1_004A   0x00004a    program     static F:\electricity\MCU\PIC\PIC_lab\NO7\lab7.X\ASM.asm
+             _.org_1_004B   0x00004b    program     static F:\electricity\MCU\PIC\PIC_lab\NO7\lab7.X\ASM.asm
+             _.org_1_0051   0x000051    program     static F:\electricity\MCU\PIC\PIC_lab\NO7\lab7.X\ASM.asm
+             _.org_1_005C   0x00005c    program     static F:\electricity\MCU\PIC\PIC_lab\NO7\lab7.X\ASM.asm
+             _.org_1_005D   0x00005d    program     static F:\electricity\MCU\PIC\PIC_lab\NO7\lab7.X\ASM.asm
+             _.org_1_0063   0x000063    program     static F:\electricity\MCU\PIC\PIC_lab\NO7\lab7.X\ASM.asm
+             _.org_1_006F   0x00006f    program     static F:\electricity\MCU\PIC\PIC_lab\NO7\lab7.X\ASM.asm
+             _.org_1_0070   0x000070    program     static F:\electricity\MCU\PIC\PIC_lab\NO7\lab7.X\ASM.asm
+             _.org_1_007A   0x00007a    program     static F:\electricity\MCU\PIC\PIC_lab\NO7\lab7.X\ASM.asm
+             _.org_1_0084   0x000084    program     static F:\electricity\MCU\PIC\PIC_lab\NO7\lab7.X\ASM.asm
+             _.org_1_0085   0x000085    program     static F:\electricity\MCU\PIC\PIC_lab\NO7\lab7.X\ASM.asm
+             _.org_1_008F   0x00008f    program     static F:\electricity\MCU\PIC\PIC_lab\NO7\lab7.X\ASM.asm
+                     main   0x000010    program     static F:\electricity\MCU\PIC\PIC_lab\NO7\lab7.X\ASM.asm
+                main_loop   0x00001a    program     static F:\electricity\MCU\PIC\PIC_lab\NO7\lab7.X\ASM.asm
+
+
+
+                              Symbols - Sorted by Address
+                     Name    Address   Location    Storage File                     
+                ---------  ---------  ---------  --------- ---------                
+                 EndOfInt   0x000009    program     static F:\electricity\MCU\PIC\PIC_lab\NO7\lab7.X\ASM.asm
+                     main   0x000010    program     static F:\electricity\MCU\PIC\PIC_lab\NO7\lab7.X\ASM.asm
+                main_loop   0x00001a    program     static F:\electricity\MCU\PIC\PIC_lab\NO7\lab7.X\ASM.asm
+             _.org_1_0023   0x000023    program     static F:\electricity\MCU\PIC\PIC_lab\NO7\lab7.X\ASM.asm
+             _.org_1_0024   0x000024    program     static F:\electricity\MCU\PIC\PIC_lab\NO7\lab7.X\ASM.asm
+             _.org_1_002B   0x00002b    program     static F:\electricity\MCU\PIC\PIC_lab\NO7\lab7.X\ASM.asm
+             _.org_1_002F   0x00002f    program     static F:\electricity\MCU\PIC\PIC_lab\NO7\lab7.X\ASM.asm
+             _.org_1_0030   0x000030    program     static F:\electricity\MCU\PIC\PIC_lab\NO7\lab7.X\ASM.asm
+             _.org_1_0037   0x000037    program     static F:\electricity\MCU\PIC\PIC_lab\NO7\lab7.X\ASM.asm
+             _.org_1_003B   0x00003b    program     static F:\electricity\MCU\PIC\PIC_lab\NO7\lab7.X\ASM.asm
+             _.org_1_003C   0x00003c    program     static F:\electricity\MCU\PIC\PIC_lab\NO7\lab7.X\ASM.asm
+             _.org_1_0043   0x000043    program     static F:\electricity\MCU\PIC\PIC_lab\NO7\lab7.X\ASM.asm
+             _.org_1_004A   0x00004a    program     static F:\electricity\MCU\PIC\PIC_lab\NO7\lab7.X\ASM.asm
+             _.org_1_004B   0x00004b    program     static F:\electricity\MCU\PIC\PIC_lab\NO7\lab7.X\ASM.asm
+             _.org_1_0051   0x000051    program     static F:\electricity\MCU\PIC\PIC_lab\NO7\lab7.X\ASM.asm
+             _.org_1_005C   0x00005c    program     static F:\electricity\MCU\PIC\PIC_lab\NO7\lab7.X\ASM.asm
+             _.org_1_005D   0x00005d    program     static F:\electricity\MCU\PIC\PIC_lab\NO7\lab7.X\ASM.asm
+             _.org_1_0063   0x000063    program     static F:\electricity\MCU\PIC\PIC_lab\NO7\lab7.X\ASM.asm
+             _.org_1_006F   0x00006f    program     static F:\electricity\MCU\PIC\PIC_lab\NO7\lab7.X\ASM.asm
+             _.org_1_0070   0x000070    program     static F:\electricity\MCU\PIC\PIC_lab\NO7\lab7.X\ASM.asm
+             _.org_1_007A   0x00007a    program     static F:\electricity\MCU\PIC\PIC_lab\NO7\lab7.X\ASM.asm
+             _.org_1_0084   0x000084    program     static F:\electricity\MCU\PIC\PIC_lab\NO7\lab7.X\ASM.asm
+             _.org_1_0085   0x000085    program     static F:\electricity\MCU\PIC\PIC_lab\NO7\lab7.X\ASM.asm
+             _.org_1_008F   0x00008f    program     static F:\electricity\MCU\PIC\PIC_lab\NO7\lab7.X\ASM.asm
+               HC595_Init   0x000091    program     static F:\electricity\MCU\PIC\PIC_lab\NO7\lab7.X\ASM.asm
+         HC595_Write_Byte   0x000099    program     static F:\electricity\MCU\PIC\PIC_lab\NO7\lab7.X\ASM.asm
+                 Loop_595   0x00009e    program     static F:\electricity\MCU\PIC\PIC_lab\NO7\lab7.X\ASM.asm
+                 SET1_595   0x0000a1    program     static F:\electricity\MCU\PIC\PIC_lab\NO7\lab7.X\ASM.asm
+                 SET0_595   0x0000a3    program     static F:\electricity\MCU\PIC\PIC_lab\NO7\lab7.X\ASM.asm
+                Clock_595   0x0000a5    program     static F:\electricity\MCU\PIC\PIC_lab\NO7\lab7.X\ASM.asm
+            TurnOff_7LEDs   0x0000b0    program     static F:\electricity\MCU\PIC\PIC_lab\NO7\lab7.X\ASM.asm
+                  DelayMS   0x0000bb    program     static F:\electricity\MCU\PIC\PIC_lab\NO7\lab7.X\ASM.asm
+                      LL1   0x0000bc    program     static F:\electricity\MCU\PIC\PIC_lab\NO7\lab7.X\ASM.asm
+                      LL2   0x0000be    program     static F:\electricity\MCU\PIC\PIC_lab\NO7\lab7.X\ASM.asm
+                      LL3   0x0000c0    program     static F:\electricity\MCU\PIC\PIC_lab\NO7\lab7.X\ASM.asm
+
+
