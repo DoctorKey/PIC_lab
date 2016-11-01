@@ -1,0 +1,66 @@
+MPLINK 5.08, LINKER
+Linker Map File - Created Tue Nov 01 15:39:50 2016
+
+                                 Section Info
+                  Section       Type    Address   Location Size(Bytes)
+                ---------  ---------  ---------  ---------  ---------
+                   .org_0       code   0x000000    program   0x000008
+                   .org_1       code   0x000800    program   0x0000da
+                   .cinit    romdata   0x00086d    program   0x000004
+.config_2007_BUILD/DEFAULT/PRODUCTION/ASM.O       code   0x002007    program   0x000002
+
+
+
+                              Program Memory Usage 
+                               Start         End      
+                           ---------   ---------      
+                            0x000000    0x000003      
+                            0x000800    0x00086e      
+                            0x002007    0x002007      
+            116 out of 8454 program addresses used, program memory utilization is 1%
+
+
+
+                              Symbols - Sorted by Name
+                     Name    Address   Location    Storage File                     
+                ---------  ---------  ---------  --------- ---------                
+                Clock_595   0x00084f    program     static F:\electricity\MCU\PIC\PIC_lab\NO8\lab8.X\ASM.asm
+                  DelayUS   0x000867    program     static F:\electricity\MCU\PIC\PIC_lab\NO8\lab8.X\ASM.asm
+              EEPROM_Read   0x00082e    program     static F:\electricity\MCU\PIC\PIC_lab\NO8\lab8.X\ASM.asm
+             EEPROM_Write   0x000819    program     static F:\electricity\MCU\PIC\PIC_lab\NO8\lab8.X\ASM.asm
+               HC595_Init   0x00083d    program     static F:\electricity\MCU\PIC\PIC_lab\NO8\lab8.X\ASM.asm
+         HC595_Write_Byte   0x000843    program     static F:\electricity\MCU\PIC\PIC_lab\NO8\lab8.X\ASM.asm
+                    LL1US   0x000868    program     static F:\electricity\MCU\PIC\PIC_lab\NO8\lab8.X\ASM.asm
+                     Loop   0x000818    program     static F:\electricity\MCU\PIC\PIC_lab\NO8\lab8.X\ASM.asm
+                 Loop_595   0x000848    program     static F:\electricity\MCU\PIC\PIC_lab\NO8\lab8.X\ASM.asm
+                 SET0_595   0x00084d    program     static F:\electricity\MCU\PIC\PIC_lab\NO8\lab8.X\ASM.asm
+                 SET1_595   0x00084b    program     static F:\electricity\MCU\PIC\PIC_lab\NO8\lab8.X\ASM.asm
+            TurnOff_7LEDs   0x00085a    program     static F:\electricity\MCU\PIC\PIC_lab\NO8\lab8.X\ASM.asm
+             _.org_1_0813   0x000813    program     static F:\electricity\MCU\PIC\PIC_lab\NO8\lab8.X\ASM.asm
+             _.org_1_081C   0x00081c    program     static F:\electricity\MCU\PIC\PIC_lab\NO8\lab8.X\ASM.asm
+             _.org_1_0837   0x000837    program     static F:\electricity\MCU\PIC\PIC_lab\NO8\lab8.X\ASM.asm
+                     main   0x000800    program     static F:\electricity\MCU\PIC\PIC_lab\NO8\lab8.X\ASM.asm
+
+
+
+                              Symbols - Sorted by Address
+                     Name    Address   Location    Storage File                     
+                ---------  ---------  ---------  --------- ---------                
+                     main   0x000800    program     static F:\electricity\MCU\PIC\PIC_lab\NO8\lab8.X\ASM.asm
+             _.org_1_0813   0x000813    program     static F:\electricity\MCU\PIC\PIC_lab\NO8\lab8.X\ASM.asm
+                     Loop   0x000818    program     static F:\electricity\MCU\PIC\PIC_lab\NO8\lab8.X\ASM.asm
+             EEPROM_Write   0x000819    program     static F:\electricity\MCU\PIC\PIC_lab\NO8\lab8.X\ASM.asm
+             _.org_1_081C   0x00081c    program     static F:\electricity\MCU\PIC\PIC_lab\NO8\lab8.X\ASM.asm
+              EEPROM_Read   0x00082e    program     static F:\electricity\MCU\PIC\PIC_lab\NO8\lab8.X\ASM.asm
+             _.org_1_0837   0x000837    program     static F:\electricity\MCU\PIC\PIC_lab\NO8\lab8.X\ASM.asm
+               HC595_Init   0x00083d    program     static F:\electricity\MCU\PIC\PIC_lab\NO8\lab8.X\ASM.asm
+         HC595_Write_Byte   0x000843    program     static F:\electricity\MCU\PIC\PIC_lab\NO8\lab8.X\ASM.asm
+                 Loop_595   0x000848    program     static F:\electricity\MCU\PIC\PIC_lab\NO8\lab8.X\ASM.asm
+                 SET1_595   0x00084b    program     static F:\electricity\MCU\PIC\PIC_lab\NO8\lab8.X\ASM.asm
+                 SET0_595   0x00084d    program     static F:\electricity\MCU\PIC\PIC_lab\NO8\lab8.X\ASM.asm
+                Clock_595   0x00084f    program     static F:\electricity\MCU\PIC\PIC_lab\NO8\lab8.X\ASM.asm
+            TurnOff_7LEDs   0x00085a    program     static F:\electricity\MCU\PIC\PIC_lab\NO8\lab8.X\ASM.asm
+                  DelayUS   0x000867    program     static F:\electricity\MCU\PIC\PIC_lab\NO8\lab8.X\ASM.asm
+                    LL1US   0x000868    program     static F:\electricity\MCU\PIC\PIC_lab\NO8\lab8.X\ASM.asm
+
+

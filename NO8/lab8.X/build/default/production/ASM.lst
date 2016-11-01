@@ -1,0 +1,721 @@
+MPASM 5.68                           ASM.ASM   11-1-2016  15:39:45         PAGE  1
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+                      00001 ;*******************************************************************************
+                      00002 ; 标    题: PIC_ST_V3.0学习板演示程序--片内flash读写
+                      00003 ; 文 件 名: Flash_RW
+                      00004 ; 建立日期: 2013.7.9
+                      00005 ; 修改日期: 2013.7.9
+                      00006 ; 版    本: V1.0
+                      00007 ; 作    者: zyixin
+                      00008 ;********************************************************************************
+                      00009 ; 跳线接法：给内部Flash写数据，再读取数据，并显示
+                      00010 ;*******************************************************************************
+                      00011 ;【版权】Copyright(C) 2009-2019 All Rights Reserved
+                      00012 ;【声明】此程序仅用于学习与参考，引用请注明版权和作者信息！
+                      00013 ;******************************************************************************/
+                      00014 
+                      00015  list           p=16f877A       ; 标明所用的处理器类型
+                      00016  #include       <p16f877A.inc>  ; 调用头文件    
+                      00001         LIST
+                      00002 
+                      00003 ;==========================================================================
+                      00004 ; Build date : May 15 2016
+                      00005 ;  MPASM PIC16F877A processor include
+                      00006 ; 
+                      00007 ;  (c) Copyright 1999-2016 Microchip Technology, All rights reserved
+                      00008 ;==========================================================================
+                      00009 
+                      00567         LIST
+2007   3F3A           00017  __CONFIG _CP_OFF & _WDT_OFF & _BODEN_OFF & _PWRTE_OFF & _HS_OSC & _WRT_OFF & _LVP_OFF & _CPD_OFF;熔丝位
+                            配置字
+                      00018 ; _CP_OFF: 代码保护关闭
+                      00019 ;_WDT_OFF: 看门狗关闭
+                      00020 ; _BODEN_OFF: 低压复位关闭
+                      00021 ; _PWRTE_OFF: 上电延时计数关闭
+                      00022 ; _HS_OSC : 外部高速振荡器使能
+                      00023 ; _WRT_OFF : 写程序存储器保护关闭 
+                      00024 ;_LVP_OFF : 低电压编程关闭
+                      00025 ;_CPD_OFF : EEPROM存储器代码保护
+                      00026 
+                      00027 ;***** 变量声明*******************************************************
+  00000020            00028 D1                              EQU   0x20             ; 变量1，在HC595的初始化中使用
+  00000021            00029 D2                              EQU   0x21             ; 变量2，7段数码选择中使用
+  00000023            00030 count                         EQU   0x23              ; 秒计数器
+  00000024            00031 wdata                        EQU   0x24              ; wdata字型
+                      00032 
+  00000076            00033 M_addr                     EQU  0x76             ;
+  00000077            00034 M_data                      EQU  0x77             ;
+  00000078            00035 Temp                         EQU  0x78             ;
+  00000079            00036 L1                                EQU  0x79             ;延时函数循环变量
+  0000007A            00037 L2                                EQU  0x7A             ;延时函数循环变量
+  0000007B            00038 L3                                EQU  0x7B             ;延时函数循环变量
+  0000007C            00039 i                                    EQU  0x7C
+  0000007D            00040 w_temp            EQU   0x7D            ;中断现场保护
+  0000007E            00041 status_temp       EQU   0x7E            ;中断现场保护
+  0000007F            00042 pclath_temp       EQU   0x7F            ;中断现场保护             
+MPASM 5.68                           ASM.ASM   11-1-2016  15:39:45         PAGE  2
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+                      00043 ;**********************************************************************
+                      00044         ORG         0x0000          ; 复位入口地址
+0000   0000           00045         nop                                     ; 与ICD调试配合的nop
+0001   30??           00046             movlw   high(main)    ;
+0002   008A           00047             movwf   PCLATH         ;
+0003   2???           00048         goto        main                ; 跳转到Main
+                      00049 ;**********************************************************************
+                      00050 
+Warning[205]: Found directive in column 1. (org)
+                      00051 org 0x0800
+                      00052 ;-------------------------------------------------------------------------------------------
+                      00053 ;-------------------------------------------------Main的代码--------------------------------------------
+                            ---------------------
+0800                  00054 main       
+                      00055 ;*************************************开发板显示界面的通用初始化*******************************         
+                                                               
+                      00056 
+0800   1683 1303      00057            banksel TRISD                              ; 选择bank1
+Message[302]: Register in operand not in bank 0.  Ensure that bank bits are correct.
+0802   0188           00058            clrf         TRISD                              ; 设置RD0-RD7为输出模式
+Message[302]: Register in operand not in bank 0.  Ensure that bank bits are correct.
+0803   1209           00059            bcf          TRISE, PSPMODE        ; 设置D端口为I/O端口模式      
+0804   2???           00060            call         HC595_Init                    ; 74HC595初始化
+0805   3000           00061            movlw 0x00;                                ; 写0x00数据，关掉LED点阵显示
+0806   2???           00062            call        HC595_Write_Byte     ; 
+0807   2???           00063            call        TurnOff_7LEDs            ; 调用子程序，关闭七段码LED 
+                      00064 ;*****************************************************************************************************
+0808   1283 1303      00065            banksel      PORTD
+080A   30FF           00066            movlw        0xff
+080B   0088           00067            movwf        PORTD
+                      00068            
+080C   3000           00069            movlw 0x00                                 ;
+080D   00F6           00070            movwf M_addr                            ;
+                      00071 
+                      00072 ;           movlw  0x12                                ;
+                      00073 ;           movwf M_data                             ;
+                      00074 ;           call        EEPROM_Write            ;       
+080E   01F7           00075            clrf        M_data                             ;
+080F   2???           00076            call        EEPROM_Read             ;
+                      00077            
+                      00078            
+0810   3012           00079            movlw        0x12
+0811   0277           00080            subwf        M_data,w
+0812   1D03           00081            btfss        STATUS,Z
+0813   2???           00082            goto $ + 4
+0814   1283 1303      00083            banksel      PORTD
+0816   300F           00084            movlw        0x0f
+0817   0088           00085            movwf        PORTD
+                      00086            
+                      00087 
+                      00088            
+                      00089            
+                      00090            
+MPASM 5.68                           ASM.ASM   11-1-2016  15:39:45         PAGE  3
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+                      00091      
+0818                  00092 Loop    
+0818   2???           00093            goto       Loop;
+                      00094 ;------------------------------------------------------------------Main函数结束-------------------------
+                            -----------------------------------------------------
+                      00095 
+                      00096 
+                      00097 
+                      00098 
+                      00099 ;------------------------------------------------------------------子函数-------------------------------
+                            -----------------------------------------------
+                      00100 ;********EEPROM_Write******************
+0819                  00101 EEPROM_Write                     ; 写内部EEPROM
+                      00102 ;          banksel  EEADR             ;
+                      00103 ;          movf       M_addr, w      ;写地址
+                      00104 ;          movwf   EEADR             ;
+                      00105 ;          movf       M_data, w       ;写数据
+                      00106 ;          movwf   EEDATA          ;
+                      00107 ;       BSF STATUS, RP0 ; Bank1
+                      00108 ;       BCF INTCON, GIE ; Disable INTs
+                      00109 ;          banksel  EECON1          ;
+                      00110 ;          bcf           EECON1, EEPGD ;内部EEPROM空间
+                      00111 ;          bsf           EECON1, WREN  ;写使能
+                      00112 ;          movlw   0x55               ;
+                      00113 ;          movwf   EECON2        ;
+                      00114 ;          movlw   0xAA              ;
+                      00115 ;          movwf   EECON2                ;
+                      00116 ;          bsf           EECON1,WR      ;启动写操作
+                      00117 ;          btfsc       EECON1,WR        ;等待写操作结束
+                      00118 ;          goto        $ - 1                   ;
+                      00119 ;          bcf           EECON1, WREN;写禁止
+                      00120 ;         BSF STATUS, RP0 ; Bank1
+                      00121 ;         BSF INTCON, GIE ; Enable INTs
+0819   1703           00122            BSF  STATUS,RP1 ;
+081A   1683           00123         BSF     STATUS,RP0
+Message[302]: Register in operand not in bank 0.  Ensure that bank bits are correct.
+081B   188C           00124         BTFSC   EECON1,WR ;Wait for write
+081C   2???           00125         GOTO    $ - 1 ;to complete
+081D   1283           00126         BCF     STATUS,RP0 ;Bank 2
+081E   0876           00127         MOVF     M_addr,W ;Data Memory
+Message[302]: Register in operand not in bank 0.  Ensure that bank bits are correct.
+081F   008D           00128         MOVWF   EEADR ;Address to write
+0820   0877           00129         MOVF    M_data,W ;Data Memory Value
+Message[302]: Register in operand not in bank 0.  Ensure that bank bits are correct.
+0821   008C           00130         MOVWF   EEDATA ;to write
+0822   1683           00131         BSF     STATUS,RP0 ;Bank 3
+Message[302]: Register in operand not in bank 0.  Ensure that bank bits are correct.
+0823   138C           00132         BCF     EECON1,EEPGD ;Point to DATA
+                      00133                 ;memory
+Message[302]: Register in operand not in bank 0.  Ensure that bank bits are correct.
+0824   150C           00134         BSF      EECON1,WREN ;Enable writes
+0825   138B           00135         BCF     INTCON,GIE ;Disable INTs.
+0826   3055           00136         MOVLW   0x55 ;
+MPASM 5.68                           ASM.ASM   11-1-2016  15:39:45         PAGE  4
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+Message[302]: Register in operand not in bank 0.  Ensure that bank bits are correct.
+0827   008D           00137         MOVWF   EECON2 ;Write 55h
+0828   30AA           00138         MOVLW   0xAA  ;
+Message[302]: Register in operand not in bank 0.  Ensure that bank bits are correct.
+0829   008D           00139         MOVWF   EECON2 ;Write AAh
+Message[302]: Register in operand not in bank 0.  Ensure that bank bits are correct.
+082A   148C           00140         BSF     EECON1,WR        ;Set WR bit to
+                      00141                         ;begin write
+082B   178B           00142         BSF      INTCON,GIE     ;Enable INTs.
+Message[302]: Register in operand not in bank 0.  Ensure that bank bits are correct.
+082C   110C           00143         BCF     EECON1,WREN             ;Disable writes
+082D   0008           00144           return                             ;
+                      00145 ;********EEPROM_Read******************
+082E                  00146 EEPROM_Read                       ;读内部EEPROM
+082E   1283 1703      00147           banksel  EEADR             ;写地址
+0830   0876           00148           movf       M_addr, w      ;
+Message[302]: Register in operand not in bank 0.  Ensure that bank bits are correct.
+0831   008D           00149           movwf   EEADR             ;          
+0832   1683 1703      00150           banksel  EECON1          ;
+Message[302]: Register in operand not in bank 0.  Ensure that bank bits are correct.
+0834   138C           00151           bcf           EECON1, EEPGD ;内部EEPROM空间
+Message[302]: Register in operand not in bank 0.  Ensure that bank bits are correct.
+0835   140C           00152           bsf           EECON1, RD  ; 启动读操作         
+Message[302]: Register in operand not in bank 0.  Ensure that bank bits are correct.
+0836   180C           00153           btfsc       EECON1, RD  ;等待读完成
+0837   2???           00154           goto        $ - 1                   ; 
+0838   1283 1703      00155           banksel   EEDATA        ;
+Message[302]: Register in operand not in bank 0.  Ensure that bank bits are correct.
+083A   080C           00156           movf       EEDATA, w  ;
+083B   00F7           00157           movwf   M_data           ;
+083C   0008           00158           return                             ;
+                      00159 ;********HC595_Init******************
+083D                  00160 HC595_Init                                     ; 初始化 74HC595
+083D   1683 1303      00161           banksel TRISA             ;
+Message[302]: Register in operand not in bank 0.  Ensure that bank bits are correct.
+083F   1285           00162           bcf         TRISA, 5          ; SCK_595
+Message[302]: Register in operand not in bank 0.  Ensure that bank bits are correct.
+0840   1009           00163           bcf         TRISE, 0          ; RCK_595
+Message[302]: Register in operand not in bank 0.  Ensure that bank bits are correct.
+0841   1007           00164           bcf         TRISC, 0          ; SER_595
+0842   0008           00165           return                             ;
+                      00166 ;********HC595_Write_Byte***********
+0843                  00167 HC595_Write_Byte                    ; 设置 74HC595选中的行，具体的行数由W寄存器的值决定
+0843   1283 1303      00168           banksel  D1                        ;
+0845   00A0           00169           movwf  D1                         ;
+0846   3008           00170           movlw  .8                           ;
+0847   00FC           00171           movwf  i                             ; 
+0848                  00172 Loop_595
+0848   1BA0           00173           btfsc      D1, 7                    ;
+0849   2???           00174           goto       SET1_595          ;
+084A   2???           00175           goto       SET0_595          ;
+084B                  00176 SET1_595
+084B   1407           00177           bsf          PORTC, 0           ;
+MPASM 5.68                           ASM.ASM   11-1-2016  15:39:45         PAGE  5
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+084C   2???           00178           goto       Clock_595         ;
+Warning[207]: Found label after column 1. (SET0_595)
+084D                  00179  SET0_595
+084D   1007           00180           bcf          PORTC, 0           ;
+084E   2???           00181           goto       Clock_595         ;
+084F                  00182 Clock_595
+084F   0000           00183           nop                                      ;
+0850   1285           00184           bcf          PORTA, 5           ;           
+0851   0DA0           00185           RLF        D1, f                     ;
+0852   1685           00186           bsf          PORTA, 5           ;
+0853   0BFC           00187           decfsz   i, f                         ;
+0854   2???           00188           goto       Loop_595         ;      
+0855   1009           00189           bcf          PORTE, 0          ;
+0856   0000           00190           nop                                     ;
+0857   1409           00191           bsf          PORTE, 0          ;        
+0858   0000           00192           nop   
+0859   0008           00193           return                               ;
+                      00194 ;********TurnOff_7LEDs ***********
+085A                  00195 TurnOff_7LEDs                    ; 关闭七段码显示器
+085A   1683 1303      00196           banksel  ADCON1      ;
+085C   308E           00197           movlw  0x8E;
+Message[302]: Register in operand not in bank 0.  Ensure that bank bits are correct.
+085D   009F           00198           movwf  ADCON1      ;          
+Message[302]: Register in operand not in bank 0.  Ensure that bank bits are correct.
+085E   1105           00199           bcf           TRISA, 2      ;
+Message[302]: Register in operand not in bank 0.  Ensure that bank bits are correct.
+085F   1185           00200           bcf           TRISA, 3      ;
+Message[302]: Register in operand not in bank 0.  Ensure that bank bits are correct.
+0860   1205           00201           bcf           TRISA, 4      ;
+0861   1283 1303      00202           banksel  PORTA        ;
+0863   1505           00203           bsf           PORTA, 2   ;
+0864   1585           00204           bsf           PORTA, 3   ;
+0865   1605           00205           bsf           PORTA, 4   ;
+0866   0008           00206           return                         ;
+                      00207 ;**************DelayUS**************
+0867                  00208 DelayUS                                 ; 延时x毫微秒，x由变量W设定
+0867   00F9           00209           movwf   L1                 ;
+0868                  00210 LL1US        
+0868   0000           00211           nop                               ;
+0869   0000           00212           nop                               ;
+086A   0BF9           00213           decfsz    L1, f             ;          
+086B   2???           00214           goto        LL1US         ;
+086C   0008           00215           return                         ;
+                      00216 
+                      00217 
+                      00218 
+                      00219 
+Warning[205]: Found directive in column 1. (END)
+3F3A                  00220 END                                        ; 程序结束
+MPASM 5.68                           ASM.ASM   11-1-2016  15:39:45         PAGE  6
+
+
+SYMBOL TABLE
+  LABEL                             VALUE 
+
+ACKDT                             00000005
+ACKEN                             00000004
+ACKSTAT                           00000006
+ADCON0                            0000001F
+ADCON1                            0000009F
+ADCS0                             00000006
+ADCS1                             00000007
+ADCS2                             00000006
+ADDEN                             00000003
+ADFM                              00000007
+ADIE                              00000006
+ADIF                              00000006
+ADON                              00000000
+ADRESH                            0000001E
+ADRESL                            0000009E
+BCLIE                             00000003
+BCLIF                             00000003
+BF                                00000000
+BRGH                              00000002
+C                                 00000000
+C1INV                             00000004
+C1OUT                             00000006
+C2INV                             00000005
+C2OUT                             00000007
+CCP1CON                           00000017
+CCP1IE                            00000002
+CCP1IF                            00000002
+CCP1M0                            00000000
+CCP1M1                            00000001
+CCP1M2                            00000002
+CCP1M3                            00000003
+CCP1X                             00000005
+CCP1Y                             00000004
+CCP2CON                           0000001D
+CCP2IE                            00000000
+CCP2IF                            00000000
+CCP2M0                            00000000
+CCP2M1                            00000001
+CCP2M2                            00000002
+CCP2M3                            00000003
+CCP2X                             00000005
+CCP2Y                             00000004
+CCPR1                             00000015
+CCPR1H                            00000016
+CCPR1L                            00000015
+CCPR2                             0000001B
+CCPR2H                            0000001C
+CCPR2L                            0000001B
+CHS0                              00000003
+CHS1                              00000004
+CHS2                              00000005
+CIS                               00000003
+CKE                               00000006
+MPASM 5.68                           ASM.ASM   11-1-2016  15:39:45         PAGE  7
+
+
+SYMBOL TABLE
+  LABEL                             VALUE 
+
+CKP                               00000004
+CM0                               00000000
+CM1                               00000001
+CM2                               00000002
+CMCON                             0000009C
+CMIE                              00000006
+CMIF                              00000006
+CREN                              00000004
+CSRC                              00000007
+CVR0                              00000000
+CVR1                              00000001
+CVR2                              00000002
+CVR3                              00000003
+CVRCON                            0000009D
+CVREN                             00000007
+CVROE                             00000006
+CVRR                              00000005
+Clock_595                         0000084F
+D                                 00000005
+D1                                00000020
+D2                                00000021
+DATA_ADDRESS                      00000005
+DC                                00000001
+D_A                               00000005
+D_NOT_A                           00000005
+DelayUS                           00000867
+EEADR                             0000010D
+EEADRH                            0000010F
+EECON1                            0000018C
+EECON2                            0000018D
+EEDATA                            0000010C
+EEDATH                            0000010E
+EEIE                              00000004
+EEIF                              00000004
+EEPGD                             00000007
+EEPROM_Read                       0000082E
+EEPROM_Write                      00000819
+F                                 00000001
+FERR                              00000002
+FSR                               00000004
+GCEN                              00000007
+GIE                               00000007
+GO                                00000002
+GO_DONE                           00000002
+GO_NOT_DONE                       00000002
+HC595_Init                        0000083D
+HC595_Write_Byte                  00000843
+I2C_DATA                          00000005
+I2C_READ                          00000002
+I2C_START                         00000003
+I2C_STOP                          00000004
+IBF                               00000007
+IBOV                              00000005
+MPASM 5.68                           ASM.ASM   11-1-2016  15:39:45         PAGE  8
+
+
+SYMBOL TABLE
+  LABEL                             VALUE 
+
+INDF                              00000000
+INTCON                            0000000B
+INTE                              00000004
+INTEDG                            00000006
+INTF                              00000001
+IRP                               00000007
+L1                                00000079
+L2                                0000007A
+L3                                0000007B
+LL1US                             00000868
+Loop                              00000818
+Loop_595                          00000848
+M_addr                            00000076
+M_data                            00000077
+NOT_A                             00000005
+NOT_ADDRESS                       00000005
+NOT_BO                            00000000
+NOT_BOR                           00000000
+NOT_DONE                          00000002
+NOT_PD                            00000003
+NOT_POR                           00000001
+NOT_RBPU                          00000007
+NOT_RC8                           00000006
+NOT_T1SYNC                        00000002
+NOT_TO                            00000004
+NOT_TX8                           00000006
+NOT_W                             00000002
+NOT_WRITE                         00000002
+OBF                               00000006
+OERR                              00000001
+OPTION_REG                        00000081
+P                                 00000004
+PCFG0                             00000000
+PCFG1                             00000001
+PCFG2                             00000002
+PCFG3                             00000003
+PCL                               00000002
+PCLATH                            0000000A
+PCON                              0000008E
+PEIE                              00000006
+PEN                               00000002
+PIE1                              0000008C
+PIE2                              0000008D
+PIR1                              0000000C
+PIR2                              0000000D
+PORTA                             00000005
+PORTB                             00000006
+PORTC                             00000007
+PORTD                             00000008
+PORTE                             00000009
+PR2                               00000092
+PS0                               00000000
+PS1                               00000001
+MPASM 5.68                           ASM.ASM   11-1-2016  15:39:45         PAGE  9
+
+
+SYMBOL TABLE
+  LABEL                             VALUE 
+
+PS2                               00000002
+PSA                               00000003
+PSPIE                             00000007
+PSPIF                             00000007
+PSPMODE                           00000004
+R                                 00000002
+RA0                               00000000
+RA1                               00000001
+RA2                               00000002
+RA3                               00000003
+RA4                               00000004
+RA5                               00000005
+RB0                               00000000
+RB1                               00000001
+RB2                               00000002
+RB3                               00000003
+RB4                               00000004
+RB5                               00000005
+RB6                               00000006
+RB7                               00000007
+RBIE                              00000003
+RBIF                              00000000
+RC0                               00000000
+RC1                               00000001
+RC2                               00000002
+RC3                               00000003
+RC4                               00000004
+RC5                               00000005
+RC6                               00000006
+RC7                               00000007
+RC8_9                             00000006
+RC9                               00000006
+RCD8                              00000000
+RCEN                              00000003
+RCIE                              00000005
+RCIF                              00000005
+RCREG                             0000001A
+RCSTA                             00000018
+RD                                00000000
+RD0                               00000000
+RD1                               00000001
+RD2                               00000002
+RD3                               00000003
+RD4                               00000004
+RD5                               00000005
+RD6                               00000006
+RD7                               00000007
+RE0                               00000000
+RE1                               00000001
+RE2                               00000002
+READ_WRITE                        00000002
+RP0                               00000005
+RP1                               00000006
+MPASM 5.68                           ASM.ASM   11-1-2016  15:39:45         PAGE 10
+
+
+SYMBOL TABLE
+  LABEL                             VALUE 
+
+RSEN                              00000001
+RX9                               00000006
+RX9D                              00000000
+R_NOT_W                           00000002
+R_W                               00000002
+S                                 00000003
+SEN                               00000000
+SET0_595                          0000084D
+SET1_595                          0000084B
+SMP                               00000007
+SPBRG                             00000099
+SPEN                              00000007
+SREN                              00000005
+SSPADD                            00000093
+SSPBUF                            00000013
+SSPCON                            00000014
+SSPCON2                           00000091
+SSPEN                             00000005
+SSPIE                             00000003
+SSPIF                             00000003
+SSPM0                             00000000
+SSPM1                             00000001
+SSPM2                             00000002
+SSPM3                             00000003
+SSPOV                             00000006
+SSPSTAT                           00000094
+STATUS                            00000003
+SYNC                              00000004
+T0CS                              00000005
+T0IE                              00000005
+T0IF                              00000002
+T0SE                              00000004
+T1CKPS0                           00000004
+T1CKPS1                           00000005
+T1CON                             00000010
+T1INSYNC                          00000002
+T1OSCEN                           00000003
+T1SYNC                            00000002
+T2CKPS0                           00000000
+T2CKPS1                           00000001
+T2CON                             00000012
+TMR0                              00000001
+TMR0IE                            00000005
+TMR0IF                            00000002
+TMR1                              0000000E
+TMR1CS                            00000001
+TMR1H                             0000000F
+TMR1IE                            00000000
+TMR1IF                            00000000
+TMR1L                             0000000E
+TMR1ON                            00000000
+TMR2                              00000011
+TMR2IE                            00000001
+MPASM 5.68                           ASM.ASM   11-1-2016  15:39:45         PAGE 11
+
+
+SYMBOL TABLE
+  LABEL                             VALUE 
+
+TMR2IF                            00000001
+TMR2ON                            00000002
+TOUTPS0                           00000003
+TOUTPS1                           00000004
+TOUTPS2                           00000005
+TOUTPS3                           00000006
+TRISA                             00000085
+TRISA0                            00000000
+TRISA1                            00000001
+TRISA2                            00000002
+TRISA3                            00000003
+TRISA4                            00000004
+TRISA5                            00000005
+TRISB                             00000086
+TRISB0                            00000000
+TRISB1                            00000001
+TRISB2                            00000002
+TRISB3                            00000003
+TRISB4                            00000004
+TRISB5                            00000005
+TRISB6                            00000006
+TRISB7                            00000007
+TRISC                             00000087
+TRISC0                            00000000
+TRISC1                            00000001
+TRISC2                            00000002
+TRISC3                            00000003
+TRISC4                            00000004
+TRISC5                            00000005
+TRISC6                            00000006
+TRISC7                            00000007
+TRISD                             00000088
+TRISD0                            00000000
+TRISD1                            00000001
+TRISD2                            00000002
+TRISD3                            00000003
+TRISD4                            00000004
+TRISD5                            00000005
+TRISD6                            00000006
+TRISD7                            00000007
+TRISE                             00000089
+TRISE0                            00000000
+TRISE1                            00000001
+TRISE2                            00000002
+TRMT                              00000001
+TX8_9                             00000006
+TX9                               00000006
+TX9D                              00000000
+TXD8                              00000000
+TXEN                              00000005
+TXIE                              00000004
+TXIF                              00000004
+TXREG                             00000019
+MPASM 5.68                           ASM.ASM   11-1-2016  15:39:45         PAGE 12
+
+
+SYMBOL TABLE
+  LABEL                             VALUE 
+
+TXSTA                             00000098
+Temp                              00000078
+TurnOff_7LEDs                     0000085A
+UA                                00000001
+W                                 00000000
+WCOL                              00000007
+WR                                00000001
+WREN                              00000002
+WRERR                             00000003
+Z                                 00000002
+_.org_1_0813                      00000813
+_.org_1_081C                      0000081C
+_.org_1_0837                      00000837
+_BODEN_OFF                        00003FBF
+_BODEN_ON                         00003FFF
+_BOREN_OFF                        00003FBF
+_BOREN_ON                         00003FFF
+_CONFIG                           00002007
+_CPD_OFF                          00003FFF
+_CPD_ON                           00003EFF
+_CP_ALL                           00001FFF
+_CP_OFF                           00003FFF
+_CP_ON                            00001FFF
+_DEBUG_OFF                        00003FFF
+_DEBUG_ON                         000037FF
+_DEVID1                           00002006
+_FOSC_EXTRC                       00003FFF
+_FOSC_HS                          00003FFE
+_FOSC_LP                          00003FFC
+_FOSC_XT                          00003FFD
+_HS_OSC                           00003FFE
+_IDLOC0                           00002000
+_IDLOC1                           00002001
+_IDLOC2                           00002002
+_IDLOC3                           00002003
+_LP_OSC                           00003FFC
+_LVP_OFF                          00003F7F
+_LVP_ON                           00003FFF
+_PWRTE_OFF                        00003FFF
+_PWRTE_ON                         00003FF7
+_RC_OSC                           00003FFF
+_WDTE_OFF                         00003FFB
+_WDTE_ON                          00003FFF
+_WDT_OFF                          00003FFB
+_WDT_ON                           00003FFF
+_WRT_1FOURTH                      00003BFF
+_WRT_256                          00003DFF
+_WRT_HALF                         000039FF
+_WRT_OFF                          00003FFF
+_XT_OSC                           00003FFD
+__16F877A                         00000001
+count                             00000023
+i                                 0000007C
+MPASM 5.68                           ASM.ASM   11-1-2016  15:39:45         PAGE 13
+
+
+SYMBOL TABLE
+  LABEL                             VALUE 
+
+main                              00000800
+pclath_temp                       0000007F
+status_temp                       0000007E
+w_temp                            0000007D
+wdata                             00000024
+
+Errors   :     0
+Warnings :     3 reported,     0 suppressed
+Messages :    23 reported,     0 suppressed
+
+

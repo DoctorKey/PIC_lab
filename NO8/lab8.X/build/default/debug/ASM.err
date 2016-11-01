@@ -1,0 +1,26 @@
+Warning[205] F:\ELECTRICITY\MCU\PIC\PIC_LAB\NO8\LAB8.X\ASM.ASM 51 : Found directive in column 1. (org)
+Message[302] F:\ELECTRICITY\MCU\PIC\PIC_LAB\NO8\LAB8.X\ASM.ASM 58 : Register in operand not in bank 0.  Ensure that bank bits are correct.
+Message[302] F:\ELECTRICITY\MCU\PIC\PIC_LAB\NO8\LAB8.X\ASM.ASM 59 : Register in operand not in bank 0.  Ensure that bank bits are correct.
+Message[302] F:\ELECTRICITY\MCU\PIC\PIC_LAB\NO8\LAB8.X\ASM.ASM 101 : Register in operand not in bank 0.  Ensure that bank bits are correct.
+Message[302] F:\ELECTRICITY\MCU\PIC\PIC_LAB\NO8\LAB8.X\ASM.ASM 103 : Register in operand not in bank 0.  Ensure that bank bits are correct.
+Message[302] F:\ELECTRICITY\MCU\PIC\PIC_LAB\NO8\LAB8.X\ASM.ASM 107 : Register in operand not in bank 0.  Ensure that bank bits are correct.
+Message[302] F:\ELECTRICITY\MCU\PIC\PIC_LAB\NO8\LAB8.X\ASM.ASM 108 : Register in operand not in bank 0.  Ensure that bank bits are correct.
+Message[302] F:\ELECTRICITY\MCU\PIC\PIC_LAB\NO8\LAB8.X\ASM.ASM 110 : Register in operand not in bank 0.  Ensure that bank bits are correct.
+Message[302] F:\ELECTRICITY\MCU\PIC\PIC_LAB\NO8\LAB8.X\ASM.ASM 112 : Register in operand not in bank 0.  Ensure that bank bits are correct.
+Message[302] F:\ELECTRICITY\MCU\PIC\PIC_LAB\NO8\LAB8.X\ASM.ASM 113 : Register in operand not in bank 0.  Ensure that bank bits are correct.
+Message[302] F:\ELECTRICITY\MCU\PIC\PIC_LAB\NO8\LAB8.X\ASM.ASM 114 : Register in operand not in bank 0.  Ensure that bank bits are correct.
+Message[302] F:\ELECTRICITY\MCU\PIC\PIC_LAB\NO8\LAB8.X\ASM.ASM 116 : Register in operand not in bank 0.  Ensure that bank bits are correct.
+Message[302] F:\ELECTRICITY\MCU\PIC\PIC_LAB\NO8\LAB8.X\ASM.ASM 124 : Register in operand not in bank 0.  Ensure that bank bits are correct.
+Message[302] F:\ELECTRICITY\MCU\PIC\PIC_LAB\NO8\LAB8.X\ASM.ASM 126 : Register in operand not in bank 0.  Ensure that bank bits are correct.
+Message[302] F:\ELECTRICITY\MCU\PIC\PIC_LAB\NO8\LAB8.X\ASM.ASM 127 : Register in operand not in bank 0.  Ensure that bank bits are correct.
+Message[302] F:\ELECTRICITY\MCU\PIC\PIC_LAB\NO8\LAB8.X\ASM.ASM 128 : Register in operand not in bank 0.  Ensure that bank bits are correct.
+Message[302] F:\ELECTRICITY\MCU\PIC\PIC_LAB\NO8\LAB8.X\ASM.ASM 131 : Register in operand not in bank 0.  Ensure that bank bits are correct.
+Message[302] F:\ELECTRICITY\MCU\PIC\PIC_LAB\NO8\LAB8.X\ASM.ASM 137 : Register in operand not in bank 0.  Ensure that bank bits are correct.
+Message[302] F:\ELECTRICITY\MCU\PIC\PIC_LAB\NO8\LAB8.X\ASM.ASM 138 : Register in operand not in bank 0.  Ensure that bank bits are correct.
+Message[302] F:\ELECTRICITY\MCU\PIC\PIC_LAB\NO8\LAB8.X\ASM.ASM 139 : Register in operand not in bank 0.  Ensure that bank bits are correct.
+Warning[207] F:\ELECTRICITY\MCU\PIC\PIC_LAB\NO8\LAB8.X\ASM.ASM 154 : Found label after column 1. (SET0_595)
+Message[302] F:\ELECTRICITY\MCU\PIC\PIC_LAB\NO8\LAB8.X\ASM.ASM 173 : Register in operand not in bank 0.  Ensure that bank bits are correct.
+Message[302] F:\ELECTRICITY\MCU\PIC\PIC_LAB\NO8\LAB8.X\ASM.ASM 174 : Register in operand not in bank 0.  Ensure that bank bits are correct.
+Message[302] F:\ELECTRICITY\MCU\PIC\PIC_LAB\NO8\LAB8.X\ASM.ASM 175 : Register in operand not in bank 0.  Ensure that bank bits are correct.
+Message[302] F:\ELECTRICITY\MCU\PIC\PIC_LAB\NO8\LAB8.X\ASM.ASM 176 : Register in operand not in bank 0.  Ensure that bank bits are correct.
+Warning[205] F:\ELECTRICITY\MCU\PIC\PIC_LAB\NO8\LAB8.X\ASM.ASM 195 : Found directive in column 1. (END)

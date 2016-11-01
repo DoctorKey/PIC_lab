@@ -51,17 +51,17 @@ OBJECTDIR=build/${CND_CONF}/${IMAGE_TYPE}
 DISTDIR=dist/${CND_CONF}/${IMAGE_TYPE}
 
 # Source Files Quoted if spaced
-SOURCEFILES_QUOTED_IF_SPACED=ASM3.asm
+SOURCEFILES_QUOTED_IF_SPACED=ASM3.asm ASM2.asm
 
 # Object Files Quoted if spaced
-OBJECTFILES_QUOTED_IF_SPACED=${OBJECTDIR}/ASM3.o
-POSSIBLE_DEPFILES=${OBJECTDIR}/ASM3.o.d
+OBJECTFILES_QUOTED_IF_SPACED=${OBJECTDIR}/ASM3.o ${OBJECTDIR}/ASM2.o
+POSSIBLE_DEPFILES=${OBJECTDIR}/ASM3.o.d ${OBJECTDIR}/ASM2.o.d
 
 # Object Files
-OBJECTFILES=${OBJECTDIR}/ASM3.o
+OBJECTFILES=${OBJECTDIR}/ASM3.o ${OBJECTDIR}/ASM2.o
 
 # Source Files
-SOURCEFILES=ASM3.asm
+SOURCEFILES=ASM3.asm ASM2.asm
 
 
 CFLAGS=
@@ -96,6 +96,14 @@ ${OBJECTDIR}/ASM3.o: ASM3.asm  nbproject/Makefile-${CND_CONF}.mk
 	@${DEP_GEN} -d "${OBJECTDIR}/ASM3.o"
 	@${FIXDEPS} "${OBJECTDIR}/ASM3.o.d" $(SILENT) -rsi ${MP_AS_DIR} -c18 
 	
+${OBJECTDIR}/ASM2.o: ASM2.asm  nbproject/Makefile-${CND_CONF}.mk
+	@${MKDIR} "${OBJECTDIR}" 
+	@${RM} ${OBJECTDIR}/ASM2.o.d 
+	@${RM} ${OBJECTDIR}/ASM2.o 
+	@${FIXDEPS} dummy.d -e "${OBJECTDIR}/ASM2.err" $(SILENT) -c ${MP_AS} $(MP_EXTRA_AS_PRE) -d__DEBUG -d__MPLAB_DEBUGGER_PK3=1 -q -p$(MP_PROCESSOR_OPTION)  -l\"${OBJECTDIR}/ASM2.lst\" -e\"${OBJECTDIR}/ASM2.err\" $(ASM_OPTIONS)    -o\"${OBJECTDIR}/ASM2.o\" \"ASM2.asm\" 
+	@${DEP_GEN} -d "${OBJECTDIR}/ASM2.o"
+	@${FIXDEPS} "${OBJECTDIR}/ASM2.o.d" $(SILENT) -rsi ${MP_AS_DIR} -c18 
+	
 else
 ${OBJECTDIR}/ASM3.o: ASM3.asm  nbproject/Makefile-${CND_CONF}.mk
 	@${MKDIR} "${OBJECTDIR}" 
@@ -104,6 +112,14 @@ ${OBJECTDIR}/ASM3.o: ASM3.asm  nbproject/Makefile-${CND_CONF}.mk
 	@${FIXDEPS} dummy.d -e "${OBJECTDIR}/ASM3.err" $(SILENT) -c ${MP_AS} $(MP_EXTRA_AS_PRE) -q -p$(MP_PROCESSOR_OPTION)  -l\"${OBJECTDIR}/ASM3.lst\" -e\"${OBJECTDIR}/ASM3.err\" $(ASM_OPTIONS)    -o\"${OBJECTDIR}/ASM3.o\" \"ASM3.asm\" 
 	@${DEP_GEN} -d "${OBJECTDIR}/ASM3.o"
 	@${FIXDEPS} "${OBJECTDIR}/ASM3.o.d" $(SILENT) -rsi ${MP_AS_DIR} -c18 
+	
+${OBJECTDIR}/ASM2.o: ASM2.asm  nbproject/Makefile-${CND_CONF}.mk
+	@${MKDIR} "${OBJECTDIR}" 
+	@${RM} ${OBJECTDIR}/ASM2.o.d 
+	@${RM} ${OBJECTDIR}/ASM2.o 
+	@${FIXDEPS} dummy.d -e "${OBJECTDIR}/ASM2.err" $(SILENT) -c ${MP_AS} $(MP_EXTRA_AS_PRE) -q -p$(MP_PROCESSOR_OPTION)  -l\"${OBJECTDIR}/ASM2.lst\" -e\"${OBJECTDIR}/ASM2.err\" $(ASM_OPTIONS)    -o\"${OBJECTDIR}/ASM2.o\" \"ASM2.asm\" 
+	@${DEP_GEN} -d "${OBJECTDIR}/ASM2.o"
+	@${FIXDEPS} "${OBJECTDIR}/ASM2.o.d" $(SILENT) -rsi ${MP_AS_DIR} -c18 
 	
 endif
 
